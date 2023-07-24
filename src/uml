@@ -1,9 +1,27 @@
-<mxfile host="app.diagrams.net" modified="2023-07-24T14:27:46.175Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.115 Safari/537.36" version="21.6.5" etag="gGPo4_cYYa8PW_AjhKV9" type="github">
+<mxfile host="app.diagrams.net" modified="2023-07-24T14:31:53.741Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.115 Safari/537.36" etag="eDs3AF5_t3Wnz28a6yQ9" version="21.6.5" type="github">
   <diagram name="Page-1" id="Mz_7DKgLmT9b45w7q4UH">
-    <mxGraphModel>
+    <mxGraphModel dx="1687" dy="869" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="toJvwet_99IL0RdZ_0vm-3" value="Customer" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="399" y="370" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="toJvwet_99IL0RdZ_0vm-7" value="Administrateur" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="399" y="490" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="toJvwet_99IL0RdZ_0vm-8" value="Pizzaoilo" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="399" y="610" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="toJvwet_99IL0RdZ_0vm-9" value="Waiter" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="399" y="720" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="toJvwet_99IL0RdZ_0vm-10" value="Delivery Guys" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="399" y="830" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="toJvwet_99IL0RdZ_0vm-11" value="Delivery Guys" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="399" y="940" width="30" height="60" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>

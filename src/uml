@@ -1,11 +1,11 @@
-<mxfile host="app.diagrams.net" modified="2023-07-25T09:31:26.578Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36" etag="4XsQjrENcrTa2GC7Iz9j" version="21.6.5" type="github">
+<mxfile host="app.diagrams.net" modified="2023-07-25T09:41:38.335Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36" etag="TBzn-U1SMilwwh8rC9QS" version="21.6.5" type="github">
   <diagram name="Page-1" id="Mz_7DKgLmT9b45w7q4UH">
-    <mxGraphModel dx="1434" dy="796" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1062" dy="590" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="toJvwet_99IL0RdZ_0vm-15" value="" style="rounded=0;whiteSpace=wrap;html=1;textOpacity=0;" parent="1" vertex="1">
-          <mxGeometry x="490" y="230" width="330" height="930" as="geometry" />
+          <mxGeometry x="490" y="230" width="330" height="1140" as="geometry" />
         </mxCell>
         <mxCell id="toJvwet_99IL0RdZ_0vm-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="toJvwet_99IL0RdZ_0vm-3" target="toJvwet_99IL0RdZ_0vm-16" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -60,8 +60,14 @@
         <mxCell id="toJvwet_99IL0RdZ_0vm-9" value="Waiter" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
           <mxGeometry x="399" y="870" width="30" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="toJvwet_99IL0RdZ_0vm-10" value="Delivery Guys" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
-          <mxGeometry x="399" y="1050" width="30" height="60" as="geometry" />
+        <mxCell id="116jDOXdt5CS1FajKAcz-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="toJvwet_99IL0RdZ_0vm-10" target="toJvwet_99IL0RdZ_0vm-35">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="116jDOXdt5CS1FajKAcz-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="toJvwet_99IL0RdZ_0vm-10" target="116jDOXdt5CS1FajKAcz-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="toJvwet_99IL0RdZ_0vm-10" value="Employee" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
+          <mxGeometry x="390" y="1109" width="30" height="60" as="geometry" />
         </mxCell>
         <mxCell id="toJvwet_99IL0RdZ_0vm-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="toJvwet_99IL0RdZ_0vm-16" target="toJvwet_99IL0RdZ_0vm-17" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -115,6 +121,9 @@
         </mxCell>
         <mxCell id="116jDOXdt5CS1FajKAcz-1" value="Gerer les autorisations des employés" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="650" y="490" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="116jDOXdt5CS1FajKAcz-3" value="&lt;p&gt;&lt;/p&gt;&lt;p dir=&quot;ltr&quot;&gt;Se connecter&lt;/p&gt;" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="530" y="1169" width="120" height="80" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

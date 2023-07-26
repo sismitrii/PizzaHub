@@ -1,3 +1,5 @@
+USE PizzaHubBDD2
+
 CREATE TABLE [Role] (
   [id] Int PRIMARY KEY IDENTITY(1, 1),
   [name] VARCHAR(50) UNIQUE NOT NULL

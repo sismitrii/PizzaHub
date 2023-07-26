@@ -25,4 +25,27 @@ public class MenuItemServiceImpl implements MenuItemService {
 		
 		//return menuItemRepository.getAll();
 	}
+
+	@Override
+	public List<String> getAllItemCategory() {
+		List<String> menuItemCategories = new ArrayList<>();
+		for(MenuItemCategory menuIitemCategory : MenuItemCategory.values()) {
+			menuItemCategories.add(menuIitemCategory.toString());
+			}
+		return menuItemCategories;
+	}
+
+	@Override
+	public List<MenuItem> findAllItemForCategory(MenuItemCategory menuItemCategory) {
+		List<MenuItem> menuItems = new ArrayList<MenuItem>();
+		menuItems.add(new MenuItem(1, "Lasagne", MenuItemCategory.PLAT, 1450));
+		menuItems.add(new MenuItem(2, "Pasta al Carbonara", MenuItemCategory.PLAT, 1250));
+
+		// touver tout les menuItem
+		//menuItemRepository.findAllItemForCategory();
+		return menuItems;
+	}
+	
+	
+	
 }

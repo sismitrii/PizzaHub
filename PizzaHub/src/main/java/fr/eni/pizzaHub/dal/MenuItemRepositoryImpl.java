@@ -33,14 +33,30 @@
 //	
 //	}
 //	
+//	@Override
+//	public List<MenuItem> findAllItemForCategory(MenuItemCategory menuItemCategory) {
+//		String sql = "SELECT menuItemId, name, menuItemsCategory, price FROM MenuItems WHERE menuItemCategory = ?";
+//		
+//		//to test
+//        return jdbcTemplate.query(sql,menuItemCategory.toString(), new MenuItemRowMapper());
+//	}
+//	
+//	@Override
+//	public List<MenuItem> findMenuItemsByOrderId(int orderId) {
+//		// TODO Auto-generated method stub
+//	}
+//	
 //	//weird to add a class into a class..
 //	private static class MenuItemRowMapper implements RowMapper<MenuItem> {
 //	    @Override
 //	    public MenuItem mapRow(ResultSet rs, int rowNum) throws SQLException {
-//	        MenuItem menuItem = new MenuItem(rs.getInt("menuItemIId"), rs.getString("name"), MenuItemCategory.valueOf(rs.getString("menuItemCategory")), rs.getInt("price"));
+//	        MenuItem menuItem = new MenuItem(rs.getInt("menuItemIId"), rs.getString("name"), MenuItemCategory.valueOf(rs.getString("menuItemCategory")), rs.getDouble("price"));
 //	        return menuItem;
 //	    }
 //	}
+//
+//
+//
 //}
 //
 //

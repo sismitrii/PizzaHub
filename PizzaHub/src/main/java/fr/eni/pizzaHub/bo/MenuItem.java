@@ -6,10 +6,10 @@ public class MenuItem {
 	private int menuItemIId;
 	private String Name;
 	private MenuItemCategory menuItemCategory;
-	private int price;
+	private double price;
 	private List<Product> ingedients;
 	
-	public MenuItem(int menuItemIId, String name, MenuItemCategory menuItemCategory, int price/*, List<Product> ingredients*/) {
+	public MenuItem(int menuItemIId, String name, MenuItemCategory menuItemCategory, double price/*, List<Product> ingredients*/) {
 		super();
 		this.menuItemIId = menuItemIId;
 		Name = name;
@@ -35,10 +35,10 @@ public class MenuItem {
 	public void setMenuItemsCategory(MenuItemCategory menuItemCategory) {
 		this.menuItemCategory = menuItemCategory;
 	}
-	public int getPrice() {
+	public double getPrice() {
 		return price;
 	}
-	public void setPrice(int price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 	public List<Product> getIngedients() {

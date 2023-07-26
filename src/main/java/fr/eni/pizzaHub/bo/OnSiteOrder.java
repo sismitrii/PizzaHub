@@ -46,9 +46,9 @@ public class OnSiteOrder extends Order{
 	
 	///TO TEST
 	private int getActualStep(List<MenuItem> menuItems) {
-		if( menuItems.stream().filter(x -> x.getMenuItemsCategory() == MenuItemCategory.ENTREE).findFirst().orElse(null) != null){
+		if( menuItems.stream().filter(x -> x.getMenuItemCategory() == MenuItemCategory.ENTREE).findFirst().orElse(null) != null){
 			return 1; 
-		} else if (menuItems.stream().filter(x -> x.getMenuItemsCategory() == MenuItemCategory.PLAT || x.getMenuItemsCategory() ==  MenuItemCategory.PIZZA).findFirst().orElse(null) != null) {
+		} else if (menuItems.stream().filter(x -> x.getMenuItemCategory() == MenuItemCategory.PLAT || x.getMenuItemCategory() ==  MenuItemCategory.PIZZA).findFirst().orElse(null) != null) {
 			return 2;
 		} else {
 			return 3;

@@ -5,18 +5,16 @@ import java.util.List;
 public class MenuItem {
 	private int menuItemIId;
 	private String Name;
-	private MenuItemCategory menuItemsCategory;
+	private MenuItemCategory menuItemCategory;
 	private int price;
 	private List<Product> ingedients;
 	
-	public MenuItem(int menuItemIId, String name, MenuItemCategory menuItemsCategory, int price,
-			List<Product> ingedients) {
+	public MenuItem(int menuItemIId, String name, MenuItemCategory menuItemCategory, int price/*, List<Product> ingredients*/) {
 		super();
 		this.menuItemIId = menuItemIId;
 		Name = name;
-		this.menuItemsCategory = menuItemsCategory;
+		this.menuItemCategory = menuItemCategory;
 		this.price = price;
-		this.ingedients = ingedients;
 	}
 	
 	public int getMenuItemIId() {
@@ -31,11 +29,11 @@ public class MenuItem {
 	public void setName(String name) {
 		Name = name;
 	}
-	public MenuItemCategory getMenuItemsCategory() {
-		return menuItemsCategory;
+	public MenuItemCategory getMenuItemCategory() {
+		return menuItemCategory;
 	}
-	public void setMenuItemsCategory(MenuItemCategory menuItemsCategory) {
-		this.menuItemsCategory = menuItemsCategory;
+	public void setMenuItemsCategory(MenuItemCategory menuItemCategory) {
+		this.menuItemCategory = menuItemCategory;
 	}
 	public int getPrice() {
 		return price;

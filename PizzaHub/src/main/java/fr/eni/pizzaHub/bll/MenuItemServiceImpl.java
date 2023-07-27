@@ -19,9 +19,6 @@ public class MenuItemServiceImpl implements MenuItemService {
 
 	@Override
 	public List<MenuItem> getAll() {
-//		List<MenuItem> menuItems = new ArrayList<MenuItem>();
-//		menuItems.add(new MenuItem(1,"Margarita", MenuItemCategory.PIZZA, 990));
-//		return menuItems;
 		
 		return menuItemRepository.getAll();
 	}
@@ -37,13 +34,7 @@ public class MenuItemServiceImpl implements MenuItemService {
 
 	@Override
 	public List<MenuItem> findAllItemForCategory(MenuItemCategory menuItemCategory) {
-		List<MenuItem> menuItems = new ArrayList<MenuItem>();
-		menuItems.add(new MenuItem(1, "Lasagne", MenuItemCategory.PLAT, 1450));
-		menuItems.add(new MenuItem(2, "Pasta al Carbonara", MenuItemCategory.PLAT, 1250));
-
-		// touver tout les menuItem
-		//menuItemRepository.findAllItemForCategory();
-		return menuItems;
+		return menuItemRepository.findAllItemForCategory(menuItemCategory);
 	}
 	
 	

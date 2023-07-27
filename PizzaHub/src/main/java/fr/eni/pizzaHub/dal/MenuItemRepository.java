@@ -10,5 +10,5 @@ public interface MenuItemRepository {
 	
 	public List<MenuItem> findAllItemForCategory(MenuItemCategory menuItemCategory);
 	
-	public List<MenuItem> findMenuItemsByOrderId(int orderId);
+	public List<MenuItem> findMenuItemByOrderId(int orderId);
 }

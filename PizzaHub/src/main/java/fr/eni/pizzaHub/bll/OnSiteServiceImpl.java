@@ -10,6 +10,7 @@ import fr.eni.pizzaHub.bo.MenuItem;
 import fr.eni.pizzaHub.bo.MenuItemCategory;
 import fr.eni.pizzaHub.bo.OnSiteOrder;
 import fr.eni.pizzaHub.dal.MenuItemRepository;
+import fr.eni.pizzaHub.dal.OrderRepository;
 
 
 @Service
@@ -22,12 +23,14 @@ public class OnSiteServiceImpl implements OnSiteService {
 	@Value("${tableNumber.excluded}")
 	private List<Integer> excludedTableNumber;
 	
-//	private MenuItemRepository menuItemRepository;
-//	
-//	
-//	public OnSiteServiceImpl(MenuItemRepository menuItemRepository) {
-//		this.menuItemRepository = menuItemRepository;
-//	}
+	private MenuItemRepository menuItemRepository;
+	private OrderRepository orderRepository;
+	
+	
+	public OnSiteServiceImpl(MenuItemRepository menuItemRepository, OrderRepository orderRepository) {
+		this.menuItemRepository = menuItemRepository;
+		this.orderRepository = orderRepository;;
+	}
 
 	
 	@Override
@@ -43,21 +46,27 @@ public class OnSiteServiceImpl implements OnSiteService {
 
 	@Override
 	public OnSiteOrder findOrder(int orderId){
-		
-		List<MenuItem> menuItems = new ArrayList<MenuItem>();
-		menuItems.add(new MenuItem(1,"Salade de chèvre  chaud" , MenuItemCategory.ENTREE, 9.90));
-		menuItems.add(new MenuItem(2,"Burrata" , MenuItemCategory.ENTREE, 10.90));
-		menuItems.add(new MenuItem(3,"Jambon" , MenuItemCategory.ENTREE, 8.90));
-		menuItems.add(new MenuItem(4,"Lasagne" , MenuItemCategory.PLAT, 14.90));
-		menuItems.add(new MenuItem(5,"calzone" , MenuItemCategory.PIZZA, 14.90));
-		menuItems.add(new MenuItem(6,"Linguine al pesto" , MenuItemCategory.PLAT, 18.90));
-		menuItems.add(new MenuItem(7,"Panna Cotta" , MenuItemCategory.DESSERT, 9.90));
-		menuItems.add(new MenuItem(7,"Panna Cotta" , MenuItemCategory.DESSERT, 9.90));
-		menuItems.add(new MenuItem(8,"Tiramisu" , MenuItemCategory.DESSERT, 9.90));
-		
-		OnSiteOrder onSiteOrder = new OnSiteOrder(orderId, menuItems, 12, 3);
-		
-		return onSiteOrder;  
-		//return menuItemRepository.findMenuItemsByOrderId(orderId);
+		OnSiteOrder onSiteOrder = orderRepository.findOnSiteOrderByOrderId(orderId);
+		List<MenuItem> menuItems = menuItemRepository.findMenuItemByOrderId(onSiteOrder.getOrderId());
+		if ( menuItems != null) {
+			onSiteOrder.setMenuItems(menuItems);
+		}
+		return onSiteOrder;
+	}
+
+
+	@Override
+	public boolean setSeatsNumber(int tableNumber, int seatNumber) {
+		OnSiteOrder onSiteOrder = orderRepository.findOnSiteOrderByTableNumber(tableNumber);
+		if (onSiteOrder == null) {
+			orderRepository.createRestaurantOrder(tableNumber, seatNumber);
+			return true;
+		} else {
+			orderRepository.updateSeatNumber(tableNumber, seatNumber);
+			return false;
+		}
+		// faire une requete pour voir s'il existe une order avec cette table en BDD 
+		//si oui on fait une requete pour update son nombre de seat
+		//si non on fait une requete pour créer la restaurantOrder en BDD
 	}
 }

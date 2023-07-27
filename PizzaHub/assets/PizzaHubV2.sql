@@ -68,7 +68,7 @@ GO
 CREATE TABLE [TimeSlot] (
   [time_slot_id] Int PRIMARY KEY IDENTITY(1, 1),
   [reservedPizza] Int NOT NULL DEFAULT (0),
-  [slot] Datetime UNIQUE NOT NULL
+  [slot] time UNIQUE NOT NULL
 )
 GO
 
@@ -137,7 +137,4 @@ EXEC sp_addextendedproperty
 @level0type = N'Schema', @level0name = 'dbo',
 @level1type = N'Table',  @level1name = 'Employee',
 @level2type = N'Column', @level2name = 'puuid';
-GO
-
-ALTER TABLE [MenuItem] ADD FOREIGN KEY ([category_id]) REFERENCES [MenuItemCategory] ([id])
 GO

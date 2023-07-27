@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waiter Order Pad</title>
+    <link type="text/css" rel="stylesheet" href="styles/waiter.css">
+    <script src="https://kit.fontawesome.com/540b9977d6.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <header>
+        <i class="fa-solid fa-arrow-left"></i>
+        <h1>Commande</h1>
+    </header>
+    <main>
+        <div class="formHeader">
+            <div class="fieldHeader">
+                <label for="tableSelect">Table</label>
+                <select name="tableSelect" id="tableSelect">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </div>
+            <div class="fieldHeader">
+                <label for="seatInput">Couvert</label>
+                <input type="number" min="0" max="100" />
+            </div>
+        </div>
+        <div>
+
+            <div class=formButtons>
+                <button type="button">PIZZA</button>
+                <button type="button">Test</button>
+                <button type="button">Test</button>
+                <button type="button">Test</button>
+                <button type="button">Test</button>
+                <button type="button">Test</button>
+                <button type="button">Test</button>
+                <button type="button">Test</button>
+                <button type="button">Test</button>
+            </div>
+            <div class="orderResume">
+                <ul>
+                    <li>Pizza Margarita *2</li>
+                    <li>Calzone</li>
+                </ul>
+            </div>
+            <div class="finalButtons">
+                <button class="sendOrder" type="button">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    Envoyer la commande
+                </button>
+                <a href="#">
+                    <button class="editReceipt"type="button">
+                        <i class="fa-solid fa-receipt"></i>
+                    </button>
+                </a>
+            </div>
+    </main>
+    <!-- <main>
+        <h1>Waiter Order Pad</h1>
+        <div class="order-items">
+            <div class="item">
+                <div class="item-name">Pizza Margherita</div>
+                <div class="item-quantity">x 1</div>
+                <div class="item-price">$10.99</div>
+            </div>
+            <div class="item">
+                <div class="item-name">Spaghetti Bolognese</div>
+                <div class="item-quantity">x 2</div>
+                <div class="item-price">$12.99</div>
+            </div>
+            Add more items here
+        </div>
+        <div class="order-total">
+            <div class="total-label">Total:</div>
+            <div class="total-price">$36.97</div>
+        </div>
+        <button class="checkout-btn">Checkout</button>
+    </main> -->
+</body>
+
+</html>

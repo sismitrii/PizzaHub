@@ -9,14 +9,22 @@ public class OnSiteOrder extends Order{
 	private int seats;
 	private  int actualStep;
 	
-// COnstructor with pprivate method getActualStep to test
-	public OnSiteOrder(int orderId, List<MenuItem> menuItems, int tableNumber, int seats) {
+// COnstructor with private method getActualStep to test
+	public OnSiteOrder(int orderId, int tableNumber, int seats) {
 		super(orderId);
-		this.menuItems = menuItems;
 		this.tableNumber = tableNumber;
 		this.seats = seats;
-		this.actualStep = getActualStep(menuItems);
+		if (menuItems != null ) {
+			this.actualStep = getActualStep(menuItems);
+		}
 	}
+	
+	public OnSiteOrder(int orderId, int tableNumber, int seats, int actualStep) {
+		this(orderId, tableNumber, seats);
+		this.actualStep = actualStep;
+	}
+
+	
 	
 	public List<MenuItem> getMenuItems() {
 		return menuItems;

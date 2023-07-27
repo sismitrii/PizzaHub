@@ -29,6 +29,11 @@ public class MenuItemController {
 		 return menuItemService.getAllItemCategory();
 	}
 	
+	@GetMapping("/test")
+	public List<MenuItem> getAll(){
+		 return menuItemService.getAll();
+	}
+	
 	@GetMapping("/{menuItemCategory}")
 	@ResponseBody
 	public List<MenuItem> getAllMenuIItemByCategory(@PathVariable("menuItemCategory") MenuItemCategory menuItemCategory ){

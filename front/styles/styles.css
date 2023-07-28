@@ -1,3 +1,103 @@
-h1: {
+/*
+** ENI Project 2023
+** PizzaHub
+** Paul Tanguy, Florian Guérin
+** styles.css
+*/
+
+*, ::before, ::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+.center-children {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-flow: column;
+}
+
+.button {
+	border: 1px solid black;
+	color: white;
+	background-color: red;
+	border-radius: 100vh;
+	padding: 3vh 6vw;
+}
+
+.banner {
+	height: 100vh;
+	margin-bottom: 1vh;
+	background-image: url("/assets/crinckled_background.png");
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.align-left {
+	display: block;
+	float: left;
+	margin-right: 0.5vh;
+}
+
+.align-right {
+	display: block;
+	float: right;
+	margin-left: 0.5vh;
+}
+
+.inline { display: inline; }
+
+.grid {
+	display: grid;
 	text-align: center;
 }
+
+.grid-2 {
+	display: grid;
+	text-align: center;
+	align-items: center;
+	justify-items: center;
+	grid-template-columns: 1fr 1fr;
+	width: 100%;
+	height: 100%;
+}
+
+.grid-2>* {
+	display: grid;
+}
+
+.bold { font-weight: bold; }
+.italic { font-style: italic; }
+.light { font-weight: lighter; }
+.underline { text-decoration: underline; }
+.line-through { text-decoration: line-through; }
+.overline { text-decoration: overline; }
+
+main { margin-bottom: 11vh; }
+
+footer {
+	position: fixed;
+	top: 90vh;
+	left: 0;
+	right: 0;
+	bottom: 0;
+
+	color: white;
+	background-color: dimgrey;
+}
+
+img {
+	width: 100%;
+	object-fit: contain;
+}
+
+#menu>div.grid {
+	margin-top: 2vh;
+	padding: 1vh;
+	border: 1px solid dimgrey;
+	border-radius: 1vh;
+	background-color: lightgrey;
+}
+
+#menu>div.grid>div.container { margin-top: 2vh; }

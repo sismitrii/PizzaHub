@@ -19,33 +19,20 @@
             <div class="fieldHeader">
                 <label for="tableSelect">Table</label>
                 <select name="tableSelect" id="tableSelect">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
+                    <option hidden selected>--</option>
                 </select>
             </div>
             <div class="fieldHeader">
                 <label for="seatInput">Couvert</label>
-                <input type="number" min="0" max="100" />
+                <input id="inputSeats" disabled type="number" min="0" max="100" />
             </div>
         </div>
-        <div>
-
-            <div class=formButtons>
-                <button type="button">PIZZA</button>
-                <button type="button">Test</button>
-                <button type="button">Test</button>
-                <button type="button">Test</button>
-                <button type="button">Test</button>
-                <button type="button">Test</button>
-                <button type="button">Test</button>
-                <button type="button">Test</button>
-                <button type="button">Test</button>
+        <div class="middlePart">
+            <i id= "buttonReturnArrow" class="buttonReturnArrow fa-solid fa-arrow-left"></i>
+            <div id=formButtons>
             </div>
             <div class="orderResume">
-                <ul>
-                    <li>Pizza Margarita *2</li>
-                    <li>Calzone</li>
+                <ul id ="orderList">
                 </ul>
             </div>
             <div class="finalButtons">
@@ -60,27 +47,7 @@
                 </a>
             </div>
     </main>
-    <!-- <main>
-        <h1>Waiter Order Pad</h1>
-        <div class="order-items">
-            <div class="item">
-                <div class="item-name">Pizza Margherita</div>
-                <div class="item-quantity">x 1</div>
-                <div class="item-price">$10.99</div>
-            </div>
-            <div class="item">
-                <div class="item-name">Spaghetti Bolognese</div>
-                <div class="item-quantity">x 2</div>
-                <div class="item-price">$12.99</div>
-            </div>
-            Add more items here
-        </div>
-        <div class="order-total">
-            <div class="total-label">Total:</div>
-            <div class="total-price">$36.97</div>
-        </div>
-        <button class="checkout-btn">Checkout</button>
-    </main> -->
+    <script type="module" src="scripts/waiter.js"></script>
 </body>
 
 </html>

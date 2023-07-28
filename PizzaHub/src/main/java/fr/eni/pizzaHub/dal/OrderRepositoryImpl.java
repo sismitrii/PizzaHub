@@ -48,9 +48,9 @@ public class OrderRepositoryImpl implements OrderRepository {
 		
 		try {
 		SqlParameterSource parameters = new MapSqlParameterSource("tableNumber", tableNumber);
-		
 		return namedJdbcTemplate.queryForObject(sql, parameters,(rs, rowNum) -> new OnSiteOrder(rs.getInt("order_id"), rs.getInt("table_number"), rs.getInt("seats"), rs.getInt("order_step")));
 		}catch (Exception e) {
+			System.out.println(e);
 			return null;
 		}
 	}
@@ -86,6 +86,16 @@ public class OrderRepositoryImpl implements OrderRepository {
 		.addValue("tableNumber", tableNumber);
 		
         namedJdbcTemplate.update(UPDATE_SEATS_NUMBER, parameters);
+	}
+
+	@Override
+	public void addMenuItemToOrder(int orderId, int menuItemToAddId) {
+		String INSERT_ORDER = "INSERT INTO MenuItem_Order(menu_item_id, order_id) VALUES (:menuItemToAddId,:orderId)";
+
+		SqlParameterSource parameters = new MapSqlParameterSource("menuItemToAddId", menuItemToAddId)
+		.addValue("orderId", orderId);
+		
+        namedJdbcTemplate.update(INSERT_ORDER, parameters);
 	}
 	
 //	private static class OnSiteOrderRowMapper implements RowMapper<OnSiteOrder> {

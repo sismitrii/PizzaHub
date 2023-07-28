@@ -7,4 +7,5 @@ public interface OrderRepository {
 	public OnSiteOrder findOnSiteOrderByTableNumber(int tableNumber);
 	public void createRestaurantOrder(int tableNumber, int seatNumber);
 	public void updateSeatNumber(int TableNumber, int seatNumber);
+	public void addMenuItemToOrder(int orderId, int menuItemToAddId);
 }

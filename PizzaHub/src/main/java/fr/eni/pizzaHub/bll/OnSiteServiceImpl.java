@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import fr.eni.pizzaHub.BusinessException;
 import fr.eni.pizzaHub.bo.MenuItem;
 import fr.eni.pizzaHub.bo.MenuItemCategory;
 import fr.eni.pizzaHub.bo.OnSiteOrder;
@@ -53,6 +54,19 @@ public class OnSiteServiceImpl implements OnSiteService {
 		}
 		return onSiteOrder;
 	}
+	
+	@Override
+	public OnSiteOrder findOrderByTableNumber(int tableNumber){
+		OnSiteOrder onSiteOrder = orderRepository.findOnSiteOrderByTableNumber(tableNumber);
+		if (onSiteOrder != null) {
+			List<MenuItem> menuItems = menuItemRepository.findMenuItemByOrderId(onSiteOrder.getOrderId());
+			if ( menuItems != null) {
+				onSiteOrder.setMenuItems(menuItems);
+			}
+		}
+		return onSiteOrder;
+	}
+
 
 
 	@Override
@@ -65,8 +79,20 @@ public class OnSiteServiceImpl implements OnSiteService {
 			orderRepository.updateSeatNumber(tableNumber, seatNumber);
 			return false;
 		}
-		// faire une requete pour voir s'il existe une order avec cette table en BDD 
-		//si oui on fait une requete pour update son nombre de seat
-		//si non on fait une requete pour créer la restaurantOrder en BDD
+	}
+
+
+	@Override
+	public boolean addMenuItem(int tableNumber, int menuItemToAddId) throws BusinessException {
+		//il faut recuperer la restaurant orderId grace  à la tableNumber 
+		OnSiteOrder onSiteOrder = orderRepository.findOnSiteOrderByTableNumber(tableNumber);
+		if (onSiteOrder != null) {
+			orderRepository.addMenuItemToOrder(onSiteOrder.getOrderId(), menuItemToAddId);
+		} else {
+			throw new BusinessException(String.format("No table find for tableNumber : %d", tableNumber ));
+		}
+
+		// puis mettre dans la table de  jointure les deux id
+		return false;
 	}
 }

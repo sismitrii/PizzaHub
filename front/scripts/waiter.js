@@ -19,7 +19,7 @@ inputSeats.addEventListener('change', event => {
     setSeatsNumber(tableSelect.value, event.target.value);
 })
 editReceipt.addEventListener('click', event => {
-    location.href = `waiter-receipt.html?tableNumber=${tableSelect.value}`;
+    location.href = `/views/waiter-receipt.html?tableNumber=${tableSelect.value}`;
 })
 
 sendOrder.addEventListener('click', event => {

@@ -89,7 +89,7 @@ async function editOrder(){
             });
         if (res.ok){
             console.log("L'order a été supprimé")
-            window.location.href = "waiter.html";
+            window.location.href = "/views/waiter.html";
         }
     } catch (error){
         console.error(`Error : ${error}`);

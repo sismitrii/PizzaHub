@@ -7,6 +7,8 @@ const formButtons = document.getElementById("formButtons");
 const orderList = document.getElementById("orderList");
 const inputSeats = document.getElementById("inputSeats");
 const buttonReturnArrow = document.getElementById("buttonReturnArrow")
+const sendOrder = document.getElementById("sendOrder");
+const editReceipt = document.getElementById("editReceipt");
 
 
 init();
@@ -16,7 +18,9 @@ tableSelect.addEventListener('change', event => {
 inputSeats.addEventListener('change', event => {
     setSeatsNumber(tableSelect.value, event.target.value);
 })
-
+editReceipt.addEventListener('click', event => {
+    location.href = `waiter-receipt.html?tableNumber=${tableSelect.value}`;
+})
 
 /*============================================================*/
 /* ------------------------- Init ----------------------------*/
@@ -103,7 +107,6 @@ async function initButtons(categoryButton, isCategory){
 async function setOrderView(tableNumber = tableSelect.value){
     let order;
     try {
-        console.log(orderList.firstChild);
         while(orderList.firstChild){
             orderList.removeChild(orderList.firstChild)
         }
@@ -120,6 +123,8 @@ async function setOrderView(tableNumber = tableSelect.value){
         }
         // Pour avoir un affichage *2, *3 ect il faudrait une fonction ici
             inputSeats.removeAttribute('disabled');
+            editReceipt.removeAttribute('disabled');
+            sendOrder.removeAttribute('disabled');
             inputSeats.value = (order != undefined && order.seats != null )? order.seats : undefined;
 
     } catch (error){

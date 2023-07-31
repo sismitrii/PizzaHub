@@ -63,7 +63,8 @@ header h1 {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
-    overflow: scroll;
+    overflow-y: scroll;
+    scrollbar-width: thin;
 }
 
 #formButtons button {
@@ -115,11 +116,8 @@ header h1 {
     justify-content: center;
 }
 
-
-.finalButtons button {
-
-}
 .finalButtons .sendOrder{
+    cursor: pointer;
     width: 100%;
     margin-right: 20px;
 }
@@ -130,6 +128,7 @@ header h1 {
 }
 
 .finalButtons .editReceipt {
+    cursor: pointer;
     font-size: 25px;
 }
 

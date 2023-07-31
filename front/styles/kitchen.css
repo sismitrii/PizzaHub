@@ -42,7 +42,7 @@ section h3 {
     font-size: 35px;
 }
 
-section .orderBlock div{
+section .orderBlock ul{
     margin: auto;
     width: 90%;
     max-height: 120px;

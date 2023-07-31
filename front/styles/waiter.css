@@ -143,6 +143,7 @@ header h1 {
 }
 
 .editButton {
+    cursor: pointer;
     margin-top: 20px;
     width: 70%;
 }

@@ -22,6 +22,10 @@ editReceipt.addEventListener('click', event => {
     location.href = `waiter-receipt.html?tableNumber=${tableSelect.value}`;
 })
 
+sendOrder.addEventListener('click', event => {
+    setOrderToBePrepared(tableSelect.value);
+})
+
 /*============================================================*/
 /* ------------------------- Init ----------------------------*/
 /*============================================================*/
@@ -114,17 +118,25 @@ async function setOrderView(tableNumber = tableSelect.value){
         if (res.ok && res.status != 204){
             order = await res.json();
             let orderNameAndCount = groupMenuItemsByMenuItemId(order);
+            if (orderNameAndCount.length > 0){
+                orderNameAndCount.forEach(x => {
+                    let li = document.createElement("li");
+                    li.textContent = x.name +( x.count >= 1 ? `*${x.count}` : "")
+                    orderList.appendChild(li);
+                    });
+                editReceipt.removeAttribute('disabled');
+                sendOrder.removeAttribute('disabled');
+            } else {
+                editReceipt.setAttribute('disabled', "true");
+                sendOrder.setAttribute('disabled', "true");
+            }
 
-            orderNameAndCount.forEach(x => {
-                let li = document.createElement("li");
-                li.textContent = x.name +( x.count >= 1 ? `*${x.count}` : "")
-                orderList.appendChild(li);
-                });
+        } else {
+            editReceipt.setAttribute('disabled', "true");
+            sendOrder.setAttribute('disabled', "true");
         }
-        // Pour avoir un affichage *2, *3 ect il faudrait une fonction ici
             inputSeats.removeAttribute('disabled');
-            editReceipt.removeAttribute('disabled');
-            sendOrder.removeAttribute('disabled');
+
             inputSeats.value = (order != undefined && order.seats != null )? order.seats : undefined;
 
     } catch (error){
@@ -148,6 +160,7 @@ async function setSeatsNumber(tableNumber, seatNumber){
             },
             body: JSON.stringify(onSiteOrderRequest)
         });
+        inputSeats.style.backgroundColor = "white";
         if (res.status == 201){
             console.log(`An order have been created in DB for table : ${tableNumber} for ${seatNumber} people`)
         } else if (res.status == 200) {
@@ -207,9 +220,28 @@ async function addToOrder(menuItemId){
         // appeller la methode  d'affichage setOrderView
         setOrderView()
     }else{
+        inputSeats.style.backgroundColor = "red";
         console.log("Pas de table ou de couvert définis")
     }
+}
 
+async function setOrderToBePrepared(tableNumber){
+    try {
+        let res = await fetch(`http://localhost:8080/onsite/order/table/toPrepare`,{
+            method:"POST",
+            headers:{
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(tableNumber)
+            });
+        if (res.ok){
+            console.log("L'order a été envoyé en cuisine");
+            alert(`La commande de la table ${tableNumber} a été envoyé en cuisine`)
+        }
+    } catch (error){
+        console.error(`Error : ${error}`);
+    }
 }
 
 

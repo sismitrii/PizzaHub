@@ -1,6 +1,10 @@
 package fr.eni.pizzaHub.bo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class Order {
+	private List<MenuItem> menuItems = new ArrayList<MenuItem>();
 	private int orderId;
 	private boolean isCompleted;
 
@@ -26,5 +30,11 @@ public abstract class Order {
 		this.isCompleted = isCompleted;
 	}
 	
-	
+	public List<MenuItem> getMenuItems() {
+		return menuItems;
+	}
+
+	public void setMenuItems(List<MenuItem> menuItems) {
+		this.menuItems = menuItems;
+	}
 }

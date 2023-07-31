@@ -39,11 +39,6 @@ public class OnSiteController {
 		return onSiteService.getAllTableNumber();
 	}
 	
-	@GetMapping("/order/{orderId}")
-	public OnSiteOrder getOrderById(@PathVariable("orderId") int orderId ){
-		return onSiteService.findOrder(orderId);
-	}
-	
 	@GetMapping("/order/table/{tableNumber}")
 	public ResponseEntity<OnSiteOrder> getOrderByTableNumber(@PathVariable("tableNumber") int tableNumber ){
 		//il faudrait mettre le status à 204

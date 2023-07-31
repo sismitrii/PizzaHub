@@ -1,0 +1,139 @@
+body {
+    display: flex;
+    margin: auto;
+    background-color: #D9D9D9;
+    gap: 20px;
+    height: 100vh;
+}
+
+h2 {
+    font-size: 45px;
+    text-decoration: underline;
+    text-align: center;
+}
+
+section{
+    width: 50%;
+}
+
+.scroller {
+    display: flex;
+    overflow-y: scroll;
+    scrollbar-color: rebeccapurple;
+    scrollbar-width:none;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    height: 90vh;
+}
+
+section .orderBlock {
+    display: block;
+    cursor: pointer;
+    width: 80%;
+    min-height: 250px;
+    background-color: #FFF;
+    margin: 20px 20px;
+}
+
+section h3 {
+    margin: 20px 0px;
+    text-align: center;
+    font-size: 35px;
+}
+
+section .orderBlock div{
+    margin: auto;
+    width: 90%;
+    max-height: 120px;
+    overflow: hidden;
+    font-size: 20px;
+}
+
+.orderBlock p, .footerOrder p {
+    font-size: 25px;
+    margin-right: 25px;
+    text-align: right;
+}
+
+.orderBlock p span, .footerOrder p span{
+    font-weight: bold;
+}
+
+#orderView {
+    background-color: #FFF;
+    width: 100%;
+    height: auto;
+    margin: 50px;
+    padding: 30px;
+}
+
+.headerOrder {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    font-size: 36px;
+}
+
+.headerOrder i {
+    position: absolute;
+    font-size: 50px;
+    left: 30px;
+    top: 20px;
+}
+
+#orderView .orderList {
+    font-size: 40px;
+    border: 1px solid black;
+    height: 55vh;
+    margin: 20px 40px; 
+}
+
+#orderView .orderList li {
+    margin-left: 50px;
+
+}
+
+.footerOrder {
+    margin: 20px auto 40px;
+    display: flex;
+    width: 90%;
+    justify-content:  space-around;
+    align-items: center;
+}
+
+.footerOrder .validateButton {
+    width: 300px;
+    font-size: 30px;
+}
+
+.footerOrder p {
+    font-size: 30px;
+}
+
+
+.stepContainer {
+    margin-top: 30px;
+    width: 100%;
+    height: 55vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.stepContainer div {
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+}
+
+.stepContainer div ul {
+    list-style: none;
+    text-align: center;
+    margin: 20px 30px;
+    font-size: 20px;
+}
+
+

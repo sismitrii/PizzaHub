@@ -5,5 +5,5 @@ public enum MenuItemCategory {
 	PLAT,
 	DESSERT,
 	PIZZA,
-	BEVERAGE
+	BOISSON
 }

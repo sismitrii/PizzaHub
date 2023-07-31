@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waiter Order Pad</title>
+    <link type="text/css" rel="stylesheet" href="/styles/waiter.css">
+    <link type="text/css" rel="stylesheet" href="/styles/common.css">
+    <script src="https://kit.fontawesome.com/540b9977d6.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <header>
+        <i class="fa-solid fa-arrow-left"></i>
+        <h1>Commande</h1>
+    </header>
+    <main>
+        <div class="formHeader">
+            <div class="fieldHeader">
+                <label for="tableSelect">Table</label>
+                <select name="tableSelect" id="tableSelect">
+                    <option hidden selected>--</option>
+                </select>
+            </div>
+            <div class="fieldHeader">
+                <label for="seatInput">Couvert</label>
+                <input id="inputSeats" disabled type="number" min="0" max="100" value=""/>
+            </div>
+        </div>
+        <div class="middlePart">
+            <i id= "buttonReturnArrow" class="buttonReturnArrow fa-solid fa-arrow-left"></i>
+            <div id=formButtons>
+            </div>
+            <div class="orderResume">
+                <ul id ="orderList">
+                </ul>
+            </div>
+            <div class="finalButtons">
+                <button disabled id="sendOrder" class="classicalButton sendOrder" type="button">
+                    <!--<i class="fa-solid fa-triangle-exclamation"></i>-->
+                    Envoyer la commande
+                </button>
+                <button disabled id="editReceipt" class="classicalButton editReceipt"type="button">
+                    <i class="fa-solid fa-receipt"></i>
+                </button>
+            </div>
+    </main>
+    <script type="module" src="/scripts/waiter.js"></script>
+</body>
+
+</html>

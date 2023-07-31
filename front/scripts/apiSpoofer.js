@@ -16,8 +16,31 @@ export const _foodTypes = [
 export const _menuItems = [
 	{
 		name: "Margarita",
-		price: 12.50,
-		itemCategory: "PIZZA"
+		price: 9.90,
+		itemCategory: "PIZZA",
+		imageUrl: "/assets/pizza.png",
+		base: "Tomate"
+	},
+	{
+		name: "Hawaienne",
+		price: 13.90,
+		itemCategory: "PIZZA",
+		imageUrl: "/assets/pizza.png",
+		base: "Crème"
+	},
+	{
+		name: "Indienne",
+		price: 14.40,
+		itemCategory: "PIZZA",
+		imageUrl: "/assets/pizza.png",
+		base: "Curry"
+	},
+	{
+		name: "4 Fromages",
+		price: 10.50,
+		itemCategory: "PIZZA",
+		imageUrl: "/assets/pizza.png",
+		base: "Crème"
 	},
 	{
 		name: "Escargots de bourgogne",
@@ -45,3 +68,5 @@ export const _menuItems = [
 		itemCategory: "BEVERAGE"
 	}
 ];
+
+export const _seasonPizza = "Hawaienne";

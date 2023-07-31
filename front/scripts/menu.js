@@ -10,7 +10,6 @@ import {_foodTypes, _menuItems} from "/scripts/apiSpoofer.js"
 
 window.addEventListener("load", () => {
 	let q = document.querySelector.bind(document);
-	console.log("menu.html loaded!");
 	let foodTypes = _foodTypes.filter(_foodType => _foodType != "PIZZA");
 
 	q("#menu").appendChild(Lib.createTag("div", {

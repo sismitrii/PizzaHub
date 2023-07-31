@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import fr.eni.pizzaHub.BusinessException;
+import fr.eni.pizzaHub.DALEXception;
 import fr.eni.pizzaHub.bo.MenuItem;
 import fr.eni.pizzaHub.bo.MenuItemCategory;
 import fr.eni.pizzaHub.bo.OnSiteOrder;
@@ -67,8 +68,6 @@ public class OnSiteServiceImpl implements OnSiteService {
 		return onSiteOrder;
 	}
 
-
-
 	@Override
 	public boolean setSeatsNumber(int tableNumber, int seatNumber) {
 		OnSiteOrder onSiteOrder = orderRepository.findOnSiteOrderByTableNumber(tableNumber);
@@ -81,18 +80,36 @@ public class OnSiteServiceImpl implements OnSiteService {
 		}
 	}
 
-
 	@Override
 	public boolean addMenuItem(int tableNumber, int menuItemToAddId) throws BusinessException {
-		//il faut recuperer la restaurant orderId grace  à la tableNumber 
 		OnSiteOrder onSiteOrder = orderRepository.findOnSiteOrderByTableNumber(tableNumber);
 		if (onSiteOrder != null) {
 			orderRepository.addMenuItemToOrder(onSiteOrder.getOrderId(), menuItemToAddId);
 		} else {
 			throw new BusinessException(String.format("No table find for tableNumber : %d", tableNumber ));
 		}
-
-		// puis mettre dans la table de  jointure les deux id
 		return false;
+	}
+
+
+	@Override
+	public void deleteOrder(int tableNumber) throws BusinessException, DALEXception {
+		OnSiteOrder onSiteOrder = orderRepository.findOnSiteOrderByTableNumber(tableNumber);
+		if (onSiteOrder != null) {
+			orderRepository.deleteOrder(onSiteOrder.getOrderId());
+		} else {
+			throw new BusinessException(String.format("No table find for tableNumber : %d", tableNumber ));
+		}
+	}
+
+
+	@Override
+	public void setOrderHaveToBePrepared(int tableNumber) throws BusinessException {
+		OnSiteOrder onSiteOrder = orderRepository.findOnSiteOrderByTableNumber(tableNumber);
+		if (onSiteOrder != null) {
+			orderRepository.setOrderToBePrepared(onSiteOrder.getOrderId());
+		} else {
+			throw new BusinessException(String.format("No table find for tableNumber : %d", tableNumber ));
+		}
 	}
 }

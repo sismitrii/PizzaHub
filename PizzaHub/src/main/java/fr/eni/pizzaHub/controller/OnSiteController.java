@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.eni.pizzaHub.BusinessException;
+import fr.eni.pizzaHub.DALEXception;
 import fr.eni.pizzaHub.bll.MenuItemService;
 import fr.eni.pizzaHub.bll.OnSiteService;
 import fr.eni.pizzaHub.bo.MenuItem;
@@ -56,7 +57,7 @@ public class OnSiteController {
 	}
 	
 	@PostMapping("/order/setSeatsNumber")
-	public ResponseEntity<Object>  setSeatsNumber(@RequestBody OnSiteOrderRequest request){
+	public ResponseEntity<Object> setSeatsNumber(@RequestBody OnSiteOrderRequest request){
 		if (onSiteService.setSeatsNumber(request.getTableNumber(), request.getSeatNumber())) {
 			return new ResponseEntity<Object>(HttpStatus.CREATED);
 		} else {
@@ -70,6 +71,31 @@ public class OnSiteController {
 		try {
 			onSiteService.addMenuItem(request.getTableNumber(), request.getMenuItemToAdd());
 			return new ResponseEntity<Object>(HttpStatus.CREATED);
+		} catch (BusinessException e) {
+			e.printStackTrace();
+			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@PostMapping("order/table/edit")
+	public ResponseEntity<Object> editAnOrder(@RequestBody int tableNumber){
+		try {
+			onSiteService.deleteOrder(tableNumber);
+			return new ResponseEntity<Object>(HttpStatus.OK);
+		} catch (BusinessException e) {
+			e.printStackTrace();
+			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		} catch (DALEXception e) {
+			e.printStackTrace();
+			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@PostMapping("order/table/toPrepare")
+	public ResponseEntity<Object> sendToKitchen(@RequestBody int tableNumber){
+		try {
+			onSiteService.setOrderHaveToBePrepared(tableNumber);
+			return new ResponseEntity<Object>(HttpStatus.OK);
 		} catch (BusinessException e) {
 			e.printStackTrace();
 			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.BAD_REQUEST);

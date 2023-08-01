@@ -48,8 +48,8 @@ public class MenuItemRepositoryImpl implements MenuItemRepository{
 				+ " WHERE mic.name = :menuItemCategory AND (mic.name != 'PIZZA' OR p.size = 'L')";
 		
 		SqlParameterSource parameters = new MapSqlParameterSource("menuItemCategory", menuItemCategory.toString());
-		//to test
         return namedJdbcTemplate.query(sql, parameters, new MenuItemRowMapper());
+        //to test
 	}
 	
 	@Override
@@ -61,7 +61,6 @@ public class MenuItemRepositoryImpl implements MenuItemRepository{
 				+ "WHERE mio.order_Id = :orderId";
 		
 		SqlParameterSource parameters = new MapSqlParameterSource("orderId", orderId);
-		System.out.println("test");
         return namedJdbcTemplate.query(sql, parameters, new MenuItemRowMapper());
 	}
 	

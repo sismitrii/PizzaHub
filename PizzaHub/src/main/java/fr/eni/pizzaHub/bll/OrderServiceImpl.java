@@ -25,13 +25,20 @@ public class OrderServiceImpl implements OrderService{
 	}
 
 	@Override
-	public OnSiteOrder findOrder(int orderId){
-		OnSiteOrder onSiteOrder = orderRepository.findOnSiteOrderByOrderId(orderId);
-		List<MenuItem> menuItems = menuItemRepository.findMenuItemByOrderId(onSiteOrder.getOrderId());
-		if ( menuItems != null) {
-			onSiteOrder.setMenuItems(menuItems);
+	public Order findOrder(int orderId, boolean isOnlineOrder ){
+		Order order;
+		if (isOnlineOrder) {{
+			order = orderRepository.findOnlineOrderById(orderId); //TODO
+		} else {
+			order = orderRepository.findOnSiteOrderByOrderId(orderId);
 		}
-		return onSiteOrder;
+		if (order != null) {
+		List<MenuItem> menuItems = menuItemRepository.findMenuItemByOrderId(order.getOrderId());
+			if ( menuItems != null) {
+				order.setMenuItems(menuItems);
+			}
+		}
+		return order;
 	}
 
 	@Override
@@ -40,6 +47,7 @@ public class OrderServiceImpl implements OrderService{
 		OrderResponse orderResponse = new OrderResponse();
 		for (Order order : orders) {
 			List<MenuItem> menuItems = menuItemRepository.findMenuItemByOrderId(order.getOrderId());
+			menuItems.sort(new MenuItemComparator()); //to fix
 			if ( menuItems != null && menuItems.size() > 0) {
 				order.setMenuItems(menuItems);
 			}
@@ -50,6 +58,7 @@ public class OrderServiceImpl implements OrderService{
 				orderResponse.addOnlineOrder((OnlineOrder)order);
 			}
 		}
+		orderResponse.getOnlineOrders().sort(new OnlineOrderComparator()); // to TEST
 		return orderResponse;
 	}
 

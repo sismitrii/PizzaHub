@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.eni.pizzaHub.bll.OrderService;
 import fr.eni.pizzaHub.bo.OnSiteOrder;
+import fr.eni.pizzaHub.bo.Order;
+import fr.eni.pizzaHub.dto.OrderRequest;
 import fr.eni.pizzaHub.dto.OrderResponse;
 
 @RestController
@@ -19,9 +21,9 @@ public class OrderController {
 		this.orderService = orderService;
 	}
 	
-	@GetMapping("/order/{orderId}")
-	public OnSiteOrder getOrderById(@PathVariable("orderId") int orderId ){
-		return orderService.findOrder(orderId);
+	@PostMapping("/order/byOrderId")
+	public Order getOrderById(@RequestBody OrderRequest orderRequest){
+		return orderService.findOrder(orderRequest.getOrderId(), orderRequest.isOnlineOrder());
 	}
 	
 	@GetMapping("/order/toPrepare")

@@ -48,8 +48,8 @@ public class MenuItemRepositoryImpl implements MenuItemRepository{
 	public List<MenuItem> findMenuItemByOrderId(int orderId) {
 		String sql = "SELECT mi.menu_item_id, mi.name AS Name, mic.name AS MenuItemCategory, price FROM MenuItem mi "
 				+ "INNER JOIN MenuItemCategory mic ON mi.category_id = mic.id "
-				+ "INNER JOIN MenuItem_RestaurantOrder miro ON mi.menu_item_id = miro.menu_item_id "
-				+ "WHERE miro.order_Id = :orderId";
+				+ "INNER JOIN MenuItem_Order mio ON mi.menu_item_id = mio.menu_item_id "
+				+ "WHERE mio.order_Id = :orderId";
 		
 		SqlParameterSource parameters = new MapSqlParameterSource("orderId", orderId);
 		

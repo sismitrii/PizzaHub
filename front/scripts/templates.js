@@ -21,5 +21,15 @@ function loadFooter() {
 }
 
 window.addEventListener("load", () => {
+    document.body.firstChild.before(
+        Lib.createTag("header", {
+            class: "center-children"},
+            Lib.createTag("div", {
+                class: "grid-1 center-children"},
+                Lib.createTag("a", {
+                    href: "/",
+                    class: "button",
+                    id: "homeButton"},
+                    "[HOME]"))))
     loadFooter();
 });

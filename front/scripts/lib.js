@@ -5,116 +5,111 @@
 ** lib.js
 */
 
-class _Cookie {
-    set(_key, _value, validityInDays=7, path="/") {
-        const today = new Date();
-        const expirationDay = new Date(today.getTime() + validityInDays * 24 * 60 * 60 * 1000);
+function trueFlatten(...data) {
+    return data.flat(2147483647).map(x => ["Object"].includes(x.constructor.name) ? trueFlatten(Object.entries(x)) : x).flat(2147483647)
+}
 
-        document.cookie = `${_key}=${_value};expires=${expirationDay.toUTCString()};path=${path}`;
+function forceArray(...data) {
+    let array = [];
+    data.forEach(anything => {
+        if (anything.constructor.prototype[Symbol.iterator])
+            array = [...array, ...anything]
+        else if (anything.hasOwnProperty("entries"))
+            array = [...array, ...this.forceArray(anything.entries())]
+        else
+            array = [...array, ...Object.entries(anything)]
+    })
+    return array
+}
+
+class Hash {
+    constructor (...data) {
+        let key = null
+        let [objects, datas] = data.flat(2147483647).reduce((o, x) => {(x.constructor.name === "Object") ? o[0] = [...o[0], x] : o[1] = [...o[1], x]; return o}, [[],[]])
+
+        trueFlatten(datas).forEach((x, i) => {
+            if (i % 2 == 0) {
+                key = x
+            } else {
+                if (this[key]) this[key] = x
+                else Object.defineProperty(this, key, {value: x, writable: true, enumerable: true})
+                key = null
+            }
+        })
+        objects.forEach(obj => {
+            Object.entries(obj).forEach(([_k, _v]) => {
+                if (_v.constructor.name === "Object") _v = new Hash(_v)
+                if (this[_k]) this[_k] = _v
+                else Object.defineProperty(this, _k, {value: _v, writable: true, enumerable: true})
+            })
+        })
+        if (key)
+            Object.defineProperty(this, key, {value: null})
+
+        Object.defineProperty(this, "length", {value: Object.entries(this).length})
+
+        this.constructor.prototype[Symbol.iterator] = function aze() {
+            let i = 0
+            let elements = Object.entries(this)
+            let done = false
+    
+            return {next() {
+                let value = elements[i];
+                if (!value)
+                    done = true;
+                i += 1;
+                return {value, done}
+            }}
+        }
     }
 
-    static getAll() {
-        if (document.cookie.length == 0) return new Map();
-        return new Map(decodeURIComponent(document.cookie).split("; ").map(pair => pair.split("=")));
+    forEach(callback) {
+        return Object.entries(this).forEach(callback);
     }
+}
 
-    get(_key) { return this.getCookies().get(_key); }
-    del(_key, path="/") { this.setCookie(_key, "", -1, path); }
+function createTag(tagName, attributes={}, children=null) {
+    let tag = document.createElement(tagName);
+
+    Object.entries(attributes).forEach(([attribute, value]) => {
+        tag.setAttribute(attribute, value)
+    });
+    if (children) {
+        if (children.constructor.name === "String") tag.innerHTML = children;
+        if (children.constructor.name === "Array") children.forEach(child => { tag.appendChild(child); });
+        if (children.constructor.name.match(/^HTML.*Element$/)) tag.appendChild(children);
+    }
+    return tag
+}
+
+const Cookie = new Proxy({}, {
+    get(target, key, receiver) {
+        if (document.cookie.length == 0) return undefined;
+        let value = (new Map(decodeURIComponent(document.cookie).split("; ").map(pair => pair.split("=")))).get(key);
+        if (typeof value === "undefined" || value === "undefined") return undefined;
+        return value
+    },
+    set(target, key, value, receiver) {
+        if (typeof value === "undefined") return document.cookie = `${key}=;expires=${(new Date((new Date()).getTime()-1*24*60*60*1000)).toUTCString()};path=/`
+        return document.cookie = `${key}=${value};expires=${(new Date((new Date()).getTime()+1*24*60*60*1000)).toUTCString()};path=/`;
+    }
+})
+
+function map(sourceIterable, mappingFunction) {
+    let iterable = forceArray(sourceIterable);
+
+    return iterable.map(mappingFunction)
+}
+
+function idify(string) {
+    return "_"+string.replace(" ", "_").toLowerCase();
 }
 
 export default {
-    createTag(tagName, attributes={}, children=null) {
-        let tag = document.createElement(tagName);
-
-        Object.entries(attributes).forEach(([attribute, value]) => {
-            tag.setAttribute(attribute, value)
-        });
-        if (children) {
-            if (children.constructor.name === "String") tag.innerHTML = children;
-            if (children.constructor.name === "Array") children.forEach(child => { tag.appendChild(child); });
-            if (children.constructor.name.match(/^HTML.*Element$/)) tag.appendChild(children);
-        }
-        return tag
-    },
-
-    idify(string) {
-        return "_"+string.replace(" ", "_").toLowerCase();
-    },
-
-    Cookie: new Proxy({}, {
-        get(target, key, receiver) {
-            // if (["delete", "unset", "remove", "clear"].includes(key)) return (_key) => document.cookie = `${_key}=;expires=${(new Date((new Date()).getTime()-1*24*60*60*1000)).toUTCString()};path=/`;
-            if (document.cookie.length == 0) return undefined;
-            let value = (new Map(decodeURIComponent(document.cookie).split("; ").map(pair => pair.split("=")))).get(key);
-            if (typeof value === "undefined" || value === "undefined") return undefined;
-            return value
-        },
-        set(target, key, value, receiver) {
-            if (typeof value === "undefined") return document.cookie = `${key}=;expires=${(new Date((new Date()).getTime()-1*24*60*60*1000)).toUTCString()};path=/`
-            return document.cookie = `${key}=${value};expires=${(new Date((new Date()).getTime()+1*24*60*60*1000)).toUTCString()};path=/`;
-        }
-    }),
-
-    forceArray(...data) {
-        let array = [];
-        data.forEach(anything => {
-            if (anything.constructor.prototype[Symbol.iterator])
-                array = [...array, ...anything]
-            else if (anything.hasOwnProperty("entries"))
-                array = [...array, ...this.forceArray(anything.entries())]
-            else
-                array = [...array, ...Object.entries(anything)]
-        })
-        return array
-    },
-
-    toHash(...params) {
-        let obj = new Object();
-        let _keyHack = null
-        let trueFlatten = params.flat(2147483647).map(elem => elem.constructor.name === "Object" ? Object.entries(elem) : elem).flat(2147483647)
-
-        trueFlatten.forEach((element, i) => {
-            if (i % 2 == 0)
-                _keyHack = element
-            else {
-                obj[_keyHack] = element
-                _keyHack = null
-            }
-        })
-        if (_keyHack) obj[_keyHack] = null;
-        console.log("created an object:", obj)
-        return obj;
-
-        console.log("toHash:", key, value, params)
-        if (!key)
-            return {}
-        if (key.constructor.name === "Array") {
-            console.log("toHash(key==Array):", key, value, params)
-            Object.entries(this.toHash(...[...key, value, ...params])).forEach(([_key, _value]) => {
-                console.log("toHash:", key, value, params, ".forEach:", _key, _value)
-                obj[_key] = _value
-            })
-        }
-        console.log("toHash.obj:", key, value, params, obj)
-        obj[key] = value
-        console.log("toHash.objafter:", key, value, params, obj)
-        return obj
-
-        // console.log("Hashing", arrayOfPairs)
-        // this.forceArray(arrayOfPairs).forEach(([key, value]) => {
-        //     obj[key] = value;
-        // })
-        // obj.forEach = callback => Object.entries(obj).forEach(callback)
-        // return obj
-    },
-
-    objectify(any, ...data) {
-        return new Map(this.forceArray(any, ...data))
-    },
-
-    map(sourceIterable, mappingFunction) {
-        let iterable = this.forceArray(sourceIterable);
-
-        return iterable.map(mappingFunction)
-    }
+    idify,
+    Cookie,
+    Hash,
+    trueFlatten,
+    createTag,
+    map
 }

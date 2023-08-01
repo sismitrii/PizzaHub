@@ -25,7 +25,7 @@
           <div id="pizzas" class="grid-1"></div>
           <div class="grid-3 input">
             <label for="name">Nom: </label>
-            <input size="1" type="text" name="name" id="name" placeholder="Shrek" oninput="this.size = this.value.length+1">
+            <input size="1" type="text" name="name" id="name" placeholder="Shrek" oninput="this.size = this.value.length+1" required>
             <h3>TOTAL</h3>
             <label for="slot">Heure: </label>
               <select name="slot" id="slot">
@@ -37,7 +37,7 @@
               </select>
               <h3 id="totalPrice">0.00€</h3>
           </div>
-          <div>VALIDER</div>
+          <button type="submit" id="submit" class="button">VALIDER</div>
         </form>
       </div>
     </main>

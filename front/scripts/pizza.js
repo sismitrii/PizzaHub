@@ -86,8 +86,8 @@ window.addEventListener("load", () => {
         });
 
         pizzaForm.querySelector("#submit").addEventListener("click", (event) => {
-            let item = Lib.toHash(pizza, Lib.map(event.target.form.elements, (element) => element.name?.length > 0 ? [element.name, element.value] : []))
-            console.log("adding", item, "to the cart")
+            let item = new Lib.Hash(pizza, Lib.map(event.target.form.elements, (element) => element.name?.length > 0 ? [element.name, element.value] : []))
+            console.log("adding", item, "to the cart", item.length)
             addToCart(item)
         });
 

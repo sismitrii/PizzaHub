@@ -16,9 +16,5 @@
 #menu>div.grid>div.container { margin-top: 2vh; }
 
 .button {
-	border: 1px solid black;
-	color: white;
-	background-color: red;
-	border-radius: 100vh;
-	padding: 3vh 6vw !important;
+	padding: 3vh 6vw;
 }

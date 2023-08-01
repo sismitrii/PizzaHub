@@ -98,6 +98,24 @@ p, h1, h2, span { user-select:text; }
 
 main { margin-bottom: 11vh; }
 
+header {
+	position: fixed;
+	top: 5vh;
+	left: 5vh;
+	width: 8vh;
+	height: 8vh;
+
+	color: white;
+}
+
+header a.button#homeButton {
+	width: 8vh;
+	height: 8vh;
+	padding: 1vh 1vh;
+	text-align: center;
+	justify-self: center;
+}
+
 footer {
 	position: fixed;
 	top: 90vh;

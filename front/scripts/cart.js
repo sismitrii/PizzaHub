@@ -8,35 +8,50 @@
 import Lib from "/scripts/lib.js"
 
 window.addEventListener("load", () => {
-    let pizzas = Lib.toHash(JSON.parse(Lib.Cookie.cart || "{}"))
-    console.log("JSON", pizzas)
+    let pizzas = new Lib.Hash(JSON.parse(Lib.Cookie.cart || "{}"))
     let pizzaDiv = document.querySelector("#pizzas")
 
-    function pizzaTemplate(pizza) {
+    function pizzaTemplate(name, size, amount, price) {
         let form = (
             Lib.createTag("form", {
                 class: "grid-3 border"}, [
                 Lib.createTag("h2", {
                     class: "bold"},
-                    pizza.name),
+                    name),
                 Lib.createTag("h3", {},
                     "QTE"),
                 Lib.createTag("h3", {},
                     "PRIX"),
                 Lib.createTag("p", {},
-                    "Taille " + pizza.size),
+                    "Taille " + size),
                 Lib.createTag("div", {},
-                    "(-) 1 (+)"),
+                    `(-) ${amount} (+)`),
                 Lib.createTag("p", {},
-                    `${pizza.price}€`)
+                    `${price * amount}€`)
                 ]))
         let priceTag = document.querySelector("#totalPrice")
-        let totalPrice = parseFloat(priceTag.innerHTML.slice(0,-1)) + parseFloat(pizza.price)
+        let totalPrice = parseFloat(priceTag.innerHTML.slice(0,-1)) + parseFloat(price) * parseInt(amount)
         priceTag.innerHTML = totalPrice.toString() + "€"
         return form
     }
 
-    pizzas.forEach(pizza => {
-        pizzaDiv.appendChild(pizzaTemplate(pizza))
+    if (pizzas.length == 0)
+        pizzaDiv.appendChild(Lib.createTag("h2", {}, "Votre pannier est vide, commandez!"))
+
+    pizzas.forEach(([name_size, {amount, price}]) => {
+        let [_, name, size] = name_size.match(/^(.+)_(.+)$/)
+        pizzaDiv.appendChild(pizzaTemplate(name, size, amount, price))
     });
+
+    document.querySelector("#submit").form.addEventListener("submit", (event) => {
+        if (event.preventDefault) event.preventDefault()
+        console.log("Sending to api:", JSON.stringify(new Lib.Hash({
+            clientName: event.target.elements.name.value,
+            timeSlot: event.target.elements.slot.value,
+            totalPrice: parseFloat(event.target.querySelector("#totalPrice").innerHTML.slice(0, -1)),
+            order: pizzas
+        })))
+        //document.location.href = "/views/orderConfirmation.html"
+        return false
+    })
 });

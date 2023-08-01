@@ -11,9 +11,16 @@ import { _seasonPizza, _menuItems } from "/scripts/apiSpoofer.js"
 window.addEventListener("load", () => {
     let q = document.querySelector.bind(document);;
 
-    function updatePrice(e) {
-        console.log(e);
-        console.log("feur");
+    Lib.Cookie.cart = undefined; // ToDo: DEV
+
+    function addToCart(pizza) {
+        console.log("pizza", pizza)
+        let cart = JSON.parse(Lib.Cookie.cart || "{}")
+        let id = `${pizza.name}_${pizza.size}`
+
+        console.log("cart", cart, id)
+        cart[id] = {amount: (cart[id]?.amount || 0) + 1, price: pizza.price}
+        Lib.Cookie.cart = JSON.stringify(cart)
     }
 
     const PRICE_MODS = {
@@ -79,14 +86,9 @@ window.addEventListener("load", () => {
         });
 
         pizzaForm.querySelector("#submit").addEventListener("click", (event) => {
-            let newPizza = Lib.forceArray(new Map(Lib.forceArray(pizza, Lib.map(event.target.form.elements, (element) => [element.name, element.value]).filter(([name, value]) => name?.length > 0))));
-
-            if (Lib.Cookie.cart)
-                Lib.Cookie.cart = JSON.stringify([newPizza, ...JSON.parse(Lib.Cookie.cart)]);
-            else
-                Lib.Cookie.cart = JSON.stringify([newPizza])
-            console.log(JSON.stringify(newPizza))
-            console.log(newPizza)
+            let item = Lib.toHash(pizza, Lib.map(event.target.form.elements, (element) => element.name?.length > 0 ? [element.name, element.value] : []))
+            console.log("adding", item, "to the cart")
+            addToCart(item)
         });
 
         return pizzaForm;

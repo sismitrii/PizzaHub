@@ -68,15 +68,44 @@ export default {
         return array
     },
 
-    toHash(arrayOfPairs) {
-        let obj = {};
+    toHash(...params) {
+        let obj = new Object();
+        let _keyHack = null
+        let trueFlatten = params.flat(2147483647).map(elem => elem.constructor.name === "Object" ? Object.entries(elem) : elem).flat(2147483647)
 
-        console.log("Hashing", arrayOfPairs)
-        this.forceArray(arrayOfPairs).forEach(([key, value]) => {
-            obj[key] = value;
+        trueFlatten.forEach((element, i) => {
+            if (i % 2 == 0)
+                _keyHack = element
+            else {
+                obj[_keyHack] = element
+                _keyHack = null
+            }
         })
-        obj.forEach = callback => Object.entries(obj).forEach(callback)
+        if (_keyHack) obj[_keyHack] = null;
+        console.log("created an object:", obj)
+        return obj;
+
+        console.log("toHash:", key, value, params)
+        if (!key)
+            return {}
+        if (key.constructor.name === "Array") {
+            console.log("toHash(key==Array):", key, value, params)
+            Object.entries(this.toHash(...[...key, value, ...params])).forEach(([_key, _value]) => {
+                console.log("toHash:", key, value, params, ".forEach:", _key, _value)
+                obj[_key] = _value
+            })
+        }
+        console.log("toHash.obj:", key, value, params, obj)
+        obj[key] = value
+        console.log("toHash.objafter:", key, value, params, obj)
         return obj
+
+        // console.log("Hashing", arrayOfPairs)
+        // this.forceArray(arrayOfPairs).forEach(([key, value]) => {
+        //     obj[key] = value;
+        // })
+        // obj.forEach = callback => Object.entries(obj).forEach(callback)
+        // return obj
     },
 
     objectify(any, ...data) {

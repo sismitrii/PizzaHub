@@ -8,8 +8,8 @@
 import Lib from "/scripts/lib.js"
 
 window.addEventListener("load", () => {
-    let pizzas = Lib.map(JSON.parse(Lib.Cookie.cart), pizza => Lib.toHash(pizza))
-    console.log(pizzas)
+    let pizzas = Lib.toHash(JSON.parse(Lib.Cookie.cart || "{}"))
+    console.log("JSON", pizzas)
     let pizzaDiv = document.querySelector("#pizzas")
 
     function pizzaTemplate(pizza) {

@@ -1,17 +1,18 @@
-const takewaySection = document.querySelector("section.takeway");
-const atRestaurantSection = document.querySelector("section.atRestaurant");
+const takewaySection = document.querySelector("section.takeway .scroller");
+const atRestaurantSection = document.querySelector("section.atRestaurant .scroller");
 
 init();
 
-function init(){
+async function init(){
     //Faire le get
-    let orders = getOrders();
+    let orders = await getOrders();
+    console.log(orders)
 
     //init  takewaySection
-    initTakewaySection(orders.onlineOrders);
+    initSection(orders.onlineOrders, true);
 
     //init restaurantSection
-    initRestaurantSection(orders.onSiteOrders);
+    initSection(orders.onSiteOrders, false);
 }
 
 async function getOrders(){
@@ -26,14 +27,14 @@ async function getOrders(){
     }
 }
 
-function initTakewaySection(onlineOrders){
+function initSection(onlineOrders, isOnline){
     onlineOrders.forEach(order => {
         let block = document.createElement('a');
         block.classList.add("orderBlock");
-        block.href = `/views/kitchenOnlineOrder.html?orderId=${order.orderId}` // TO SET
+        block.href = `/views/${isOnline ? "kitchenOnlineOrder" : "kitchenRestaurantOrder"}.html?orderId=${order.orderId}`
 
         let title = document.createElement('h3');
-        title.textContent = `Table ${order.tableNumber}`;
+        title.textContent = isOnline ? `Commmande pour ${order.customerName}` : `Table ${order.tableNumber}`;
         block.appendChild(title);
 
         let list = document.createElement('ul');;
@@ -48,19 +49,19 @@ function initTakewaySection(onlineOrders){
         });
         block.appendChild(list);
 
-        let slot = document.createElement('p');
-        slot.innerHTML = `SLOT : <span>${order.timeSlot}</span>`
+        let p = document.createElement('p');
+        
+        p.innerHTML = isOnline ? `SLOT : <span>${order.timeSlot}</span>` : order.actualStep //pour le moment nombre voir si on peut faire une enum ppour deal ça
 
-        block.appendChild(slot);
+        block.appendChild(p);
 
-        takewaySection.appendChild(block);
+        if (isOnline){
+            takewaySection.appendChild(block);
+        } else {
+            atRestaurantSection.appendChild(block);
+        }
     });
 }
-
-function initRestaurantSection(restaurantOrders){
-
-}
-
 
 function groupMenuItemsByMenuItemId(data) {
     const groupedMenuItems = {};
@@ -83,3 +84,4 @@ function groupMenuItemsByMenuItemId(data) {
     });
 
     return Object.values(groupedMenuItems);
+}

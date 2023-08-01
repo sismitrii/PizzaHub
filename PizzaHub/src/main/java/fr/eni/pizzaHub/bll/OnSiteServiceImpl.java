@@ -45,16 +45,6 @@ public class OnSiteServiceImpl implements OnSiteService {
 		}
 		return tableNumbers;
 	}
-
-	@Override
-	public OnSiteOrder findOrder(int orderId){
-		OnSiteOrder onSiteOrder = orderRepository.findOnSiteOrderByOrderId(orderId);
-		List<MenuItem> menuItems = menuItemRepository.findMenuItemByOrderId(onSiteOrder.getOrderId());
-		if ( menuItems != null) {
-			onSiteOrder.setMenuItems(menuItems);
-		}
-		return onSiteOrder;
-	}
 	
 	@Override
 	public OnSiteOrder findOrderByTableNumber(int tableNumber){

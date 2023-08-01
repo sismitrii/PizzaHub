@@ -121,7 +121,7 @@ async function setOrderView(tableNumber = tableSelect.value){
             if (orderNameAndCount.length > 0){
                 orderNameAndCount.forEach(x => {
                     let li = document.createElement("li");
-                    li.textContent = x.name +( x.count >= 1 ? `*${x.count}` : "")
+                    li.textContent = x.name +( x.count > 1 ? `*${x.count}` : "")
                     orderList.appendChild(li);
                     });
                 editReceipt.removeAttribute('disabled');

@@ -23,6 +23,7 @@ public class OrderController {
 	
 	@PostMapping("/order/byOrderId")
 	public Order getOrderById(@RequestBody OrderRequest orderRequest){
+		System.out.println(orderRequest.isOnlineOrder());
 		return orderService.findOrder(orderRequest.getOrderId(), orderRequest.isOnlineOrder());
 	}
 	

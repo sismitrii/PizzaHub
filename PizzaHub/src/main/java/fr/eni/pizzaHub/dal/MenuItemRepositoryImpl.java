@@ -54,17 +54,15 @@ public class MenuItemRepositoryImpl implements MenuItemRepository{
 	
 	@Override
 	public List<MenuItem> findMenuItemByOrderId(int orderId) {
-		String sql = "SELECT mi.menu_item_id, mi.name AS Name, mic.name AS MenuItemCategory, price, p.size AS Size FROM MenuItem mi "
+		String sql = "SELECT mi.menu_item_id, mi.name AS Name, mic.name AS MenuItemCategory, price, size AS Size FROM MenuItem mi "
 				+ "INNER JOIN MenuItemCategory mic ON mi.category_id = mic.id "
 				+ "INNER JOIN MenuItem_Order mio ON mi.menu_item_id = mio.menu_item_id "
-				+ "LEFT JOIN Pizza p ON mi.menu_item_id = p.menu_item_id "
 				+ "WHERE mio.order_Id = :orderId";
 		
 		SqlParameterSource parameters = new MapSqlParameterSource("orderId", orderId);
         return namedJdbcTemplate.query(sql, parameters, new MenuItemRowMapper());
 	}
 	
-	//weird to add a class into a class..
 	private static class MenuItemRowMapper implements RowMapper<MenuItem> {
 	    @Override
 	    public MenuItem mapRow(ResultSet rs, int rowNum) throws SQLException {

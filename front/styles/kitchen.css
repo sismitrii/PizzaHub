@@ -106,6 +106,7 @@ section .orderBlock ul{
 .footerOrder .validateButton {
     width: 300px;
     font-size: 30px;
+    cursor: pointer;
 }
 
 .footerOrder p {

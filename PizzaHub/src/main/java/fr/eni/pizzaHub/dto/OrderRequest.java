@@ -2,7 +2,7 @@ package fr.eni.pizzaHub.dto;
 
 public class OrderRequest {
 	private int orderId;
-	private boolean isOnlineOrder;
+	private Boolean isOnlineOrder;
 	
 	public int getOrderId() {
 		return orderId;
@@ -10,10 +10,10 @@ public class OrderRequest {
 	public void setOrderId(int orderId) {
 		this.orderId = orderId;
 	}
-	public boolean isOnlineOrder() {
+	public Boolean isOnlineOrder() {
 		return isOnlineOrder;
 	}
-	public void setOnlineOrder(boolean isOnlineOrder) {
+	public void setisOnlineOrder(Boolean isOnlineOrder) {
 		this.isOnlineOrder = isOnlineOrder;
 	}
 }

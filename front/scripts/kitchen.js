@@ -43,7 +43,7 @@ function initSection(onlineOrders, isOnline){
 
         orderList.forEach(item => {
             let element = document.createElement('ul');
-            element.textContent = `${item.name}${item.count > 1 ? "*"+item.count : ""}`;
+            element.textContent = `${item.name} ${isOnline ? item.size : ""}${item.count > 1 ? "*"+item.count : ""}`;
 
             list.appendChild(element);
         });
@@ -76,6 +76,7 @@ function groupMenuItemsByMenuItemId(data) {
           menuItemIId: menuItemId,
           name: item.name,
           count: 1,
+          size : item.size, 
         };
       } else {
         // If the menuItemId already exists, increment the count

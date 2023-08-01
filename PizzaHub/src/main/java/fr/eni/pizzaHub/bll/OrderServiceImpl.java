@@ -26,14 +26,17 @@ public class OrderServiceImpl implements OrderService{
 
 	@Override
 	public Order findOrder(int orderId, boolean isOnlineOrder ){
+		System.out.println(isOnlineOrder);
+
 		Order order;
-		if (isOnlineOrder) {{
-			order = orderRepository.findOnlineOrderById(orderId); //TODO
+		if (isOnlineOrder) {
+			order = orderRepository.findOnlineOrderById(orderId);
 		} else {
 			order = orderRepository.findOnSiteOrderByOrderId(orderId);
 		}
 		if (order != null) {
 		List<MenuItem> menuItems = menuItemRepository.findMenuItemByOrderId(order.getOrderId());
+		System.out.println(menuItems.size());
 			if ( menuItems != null) {
 				order.setMenuItems(menuItems);
 			}

@@ -47,6 +47,19 @@ public class OrderRepositoryImpl implements OrderRepository {
 				rs.getInt("table_number"), rs.getInt("seats"), rs.getInt("order_step")));
 
 	}
+	
+	@Override
+	public OnlineOrder findOnlineOrderById(int orderId) {
+		String sql = "SELECT oo.order_id AS orderId, customer_name, ts.slot AS slot "
+				+ "FROM [OnlineOrder] oo "
+				+ "INNER JOIN [TimeSlot] ts ON oo.time_slot_id = ts.time_slot_id "
+				+ "WHERE oo.order_id = :orderId";
+		
+		SqlParameterSource parameters = new MapSqlParameterSource("orderId", orderId);
+		return namedJdbcTemplate.queryForObject(sql, parameters, (rs, rowNum) -> 
+			new OnlineOrder(rs.getInt("orderId"), rs.getString("customer_name"),rs.getTime("slot").toLocalTime()));
+
+	}
 
 	@Override
 	public OnSiteOrder findOnSiteOrderByTableNumber(int tableNumber) {
@@ -184,7 +197,7 @@ public class OrderRepositoryImpl implements OrderRepository {
 		return orders;
 	}
 	
-	
+
 
 	private static class OnSiteOrderRowMapper implements RowMapper<Order> {
 	    @Override
@@ -201,4 +214,6 @@ public class OrderRepositoryImpl implements OrderRepository {
 	    	return onlineOrder;
 	    }
 	}
+
+
 }

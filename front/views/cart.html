@@ -1,0 +1,45 @@
+<!--
+-- ENI Project 2023
+-- PizzaHub
+-- Paul Tanguy, Florian Guérin
+-- cart.html
+-->
+
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+    <meta charset="utf-8">
+    <title>PizzaHub</title>
+    <link rel="stylesheet" type="text/css" href="/styles/styles.css">
+    <link rel="stylesheet" type="text/css" href="/styles/cart.css">
+
+    <script src="/scripts/cart.js" type="module"></script>
+    <script src="/scripts/templates.js" type="module"></script>
+  </head>
+
+  <body>
+    <main>
+      <div id="cart" class="grid-1">
+        <form class="gridgap">
+          <h1 class="underline bold">VOTRE PANIER</h1>
+          <div id="pizzas" class="grid-1"></div>
+          <div class="grid-3 input">
+            <label for="name">Nom: </label>
+            <input size="1" type="text" name="name" id="name" placeholder="Shrek" oninput="this.size = this.value.length+1">
+            <h3>TOTAL</h3>
+            <label for="slot">Heure: </label>
+              <select name="slot" id="slot">
+                <option>10h00</option>
+                <option>10h30</option>
+                <option>11h00</option>
+                <option>11h30</option>
+                <option>12h00</option>
+              </select>
+              <h3 id="totalPrice">0.00€</h3>
+          </div>
+          <div>VALIDER</div>
+        </form>
+      </div>
+    </main>
+  </body>
+</html>

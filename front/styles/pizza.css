@@ -1,0 +1,20 @@
+/*
+** ENI Project 2023
+** PizzaHub
+** Paul Tanguy, Florian Guérin
+** pizza.css
+*/
+
+.pizza-template {
+    border: 1px solid dimgrey;
+    background-color: lightgrey;
+}
+
+#all-pizza, #season-pizza {
+    margin: 2vh 0;
+}
+
+button#price {
+    color:black;
+    font-weight: bold;
+}

@@ -1,43 +1,39 @@
-(() => {
-	console.log("menu.js loaded!");
+/*
+** ENI Project 2023
+** PizzaHub
+** Paul Tanguy, Florian Guérin
+** menu.js
+*/
 
-	const appetizersResponse = {
-		status: 200,
-		body: [
-			{
-				name: "Salade de chèvre chaud",
-				price: 12.50
-			},
-			{
-				name: "Assiette de Charcuterie Fine Italienne",
-				price: 16.80
-			},
-			{
-				name: "Mozzarella di Bufala",
-				price: 6.90
-			},
-			{
-				name: "Salade de roquette, peccorino et artichauds de Sicile",
-				price: 15.20
-			}
-		]
-	}
+import Lib from "/scripts/lib.js"
+import {_foodTypes, _menuItems} from "/scripts/apiSpoofer.js"
 
-	window.addEventListener("load", () => {
-		(function notfetch() {
-			let appetizersTag = document.getElementById("appetizers");
+window.addEventListener("load", () => {
+	let q = document.querySelector.bind(document);
+	let foodTypes = _foodTypes.filter(_foodType => _foodType != "PIZZA");
 
-			appetizersTag.append(document.createElement("table"));
-			appetizersResponse.body.forEach((appetizer) => {
-				let tr = document.createElement("tr");
-				let td1 = document.createElement("td");
-				let td2 = document.createElement("td");
+	q("#menu").appendChild(Lib.createTag("div", {
+		class: "grid"}));
+	q("#menu div").appendChild(Lib.createTag("h1", {
+		class: "underline"}, "La Carte"));
+	foodTypes.forEach(foodType => {
+		let menuItems = _menuItems.filter(_menuItem => _menuItem.itemCategory == foodType);
 
-				td1.innerHTML = appetizer.name;
-				td2.innerHTML = appetizer.price + "€";
-				tr.append(td1, td2);
-				appetizersTag.firstChild.append(tr);
-			});
-		})();
+		q("#menu div").appendChild(Lib.createTag("div", {
+			class: "container"},
+			Lib.createTag("h2", {
+				class: "inline underline"},
+				foodType)));
+		menuItems.forEach(menuItem => {
+			q("#menu div").appendChild(
+				Lib.createTag("div", {}, [
+					Lib.createTag("div", {
+						class: "align-left"},
+						`- ${menuItem.name}`),
+					Lib.createTag("div", {
+						class: "align-right bold"},
+						`${menuItem.price}€`)])
+			)
+		});
 	});
-})();
+});

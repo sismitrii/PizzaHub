@@ -43,11 +43,14 @@ export default {
 
     Cookie: new Proxy({}, {
         get(target, key, receiver) {
+            // if (["delete", "unset", "remove", "clear"].includes(key)) return (_key) => document.cookie = `${_key}=;expires=${(new Date((new Date()).getTime()-1*24*60*60*1000)).toUTCString()};path=/`;
             if (document.cookie.length == 0) return undefined;
-            if (["delete", "unset", "remove", "clear"].includes(key)) return (_key) => document.cookie = `${_key}=;expires=${(new Date((new Date()).getTime()-1*24*60*60*1000)).toUTCString()};path=/`;
-            return (new Map(decodeURIComponent(document.cookie).split("; ").map(pair => pair.split("=")))).get(key);
+            let value = (new Map(decodeURIComponent(document.cookie).split("; ").map(pair => pair.split("=")))).get(key);
+            if (typeof value === "undefined" || value === "undefined") return undefined;
+            return value
         },
         set(target, key, value, receiver) {
+            if (typeof value === "undefined") return document.cookie = `${key}=;expires=${(new Date((new Date()).getTime()-1*24*60*60*1000)).toUTCString()};path=/`
             return document.cookie = `${key}=${value};expires=${(new Date((new Date()).getTime()+1*24*60*60*1000)).toUTCString()};path=/`;
         }
     }),
@@ -63,6 +66,17 @@ export default {
                 array = [...array, ...Object.entries(anything)]
         })
         return array
+    },
+
+    toHash(arrayOfPairs) {
+        let obj = {};
+
+        console.log("Hashing", arrayOfPairs)
+        this.forceArray(arrayOfPairs).forEach(([key, value]) => {
+            obj[key] = value;
+        })
+        obj.forEach = callback => Object.entries(obj).forEach(callback)
+        return obj
     },
 
     objectify(any, ...data) {

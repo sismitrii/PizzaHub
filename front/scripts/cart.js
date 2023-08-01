@@ -8,9 +8,35 @@
 import Lib from "/scripts/lib.js"
 
 window.addEventListener("load", () => {
-    console.log(Lib.Cookie.test)
-    Lib.Cookie.test = "feur"
-    console.log(Lib.Cookie.test)
-    Lib.Cookie.remove("test")
-    console.log(Lib.Cookie.test)
+    let pizzas = Lib.map(JSON.parse(Lib.Cookie.cart), pizza => Lib.toHash(pizza))
+    console.log(pizzas)
+    let pizzaDiv = document.querySelector("#pizzas")
+
+    function pizzaTemplate(pizza) {
+        let form = (
+            Lib.createTag("form", {
+                class: "grid-3 border"}, [
+                Lib.createTag("h2", {
+                    class: "bold"},
+                    pizza.name),
+                Lib.createTag("h3", {},
+                    "QTE"),
+                Lib.createTag("h3", {},
+                    "PRIX"),
+                Lib.createTag("p", {},
+                    "Taille " + pizza.size),
+                Lib.createTag("div", {},
+                    "(-) 1 (+)"),
+                Lib.createTag("p", {},
+                    `${pizza.price}€`)
+                ]))
+        let priceTag = document.querySelector("#totalPrice")
+        let totalPrice = parseFloat(priceTag.innerHTML.slice(0,-1)) + parseFloat(pizza.price)
+        priceTag.innerHTML = totalPrice.toString() + "€"
+        return form
+    }
+
+    pizzas.forEach(pizza => {
+        pizzaDiv.appendChild(pizzaTemplate(pizza))
+    });
 });

@@ -10,7 +10,7 @@ import { _seasonPizza, _menuItems } from "/scripts/apiSpoofer.js"
 
 window.addEventListener("load", () => {
     let q = document.querySelector.bind(document);;
-    
+
     function updatePrice(e) {
         console.log(e);
         console.log("feur");
@@ -79,10 +79,12 @@ window.addEventListener("load", () => {
         });
 
         pizzaForm.querySelector("#submit").addEventListener("click", (event) => {
-            // let updatedPizza = new Map([...Object.entries(pizza), ...[...e.target.form.elements].filter(x => x != e.target).map(x => [x.name, x.value])])
-            
-            let newPizza = Lib.forceArray(Lib.map(event.target.form.elements, (element) => [element.name, element.value]), pizza);
+            let newPizza = Lib.forceArray(new Map(Lib.forceArray(pizza, Lib.map(event.target.form.elements, (element) => [element.name, element.value]).filter(([name, value]) => name?.length > 0))));
 
+            if (Lib.Cookie.cart)
+                Lib.Cookie.cart = JSON.stringify([newPizza, ...JSON.parse(Lib.Cookie.cart)]);
+            else
+                Lib.Cookie.cart = JSON.stringify([newPizza])
             console.log(JSON.stringify(newPizza))
             console.log(newPizza)
         });

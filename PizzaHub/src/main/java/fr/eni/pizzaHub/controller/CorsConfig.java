@@ -13,7 +13,7 @@ public class CorsConfig {
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
-        config.addAllowedOrigin("http://127.0.0.1:5500/"); // Allow requests from any origin
+        config.addAllowedOrigin("http://127.0.0.1:3000/"); // Allow requests from any origin
         config.addAllowedMethod("*"); // Allow all HTTP methods (GET, POST, etc.)
         config.addAllowedHeader("*"); // Allow all headers
         source.registerCorsConfiguration("/**", config);

@@ -6,6 +6,7 @@
 */
 
 import Lib from "/scripts/lib.js"
+import Api from "/scripts/apiSpoofer.js"
 
 window.addEventListener("load", () => {
     let pizzas = new Lib.Hash(JSON.parse(Lib.Cookie.cart || "{}"))
@@ -45,12 +46,14 @@ window.addEventListener("load", () => {
 
     document.querySelector("#submit").form.addEventListener("submit", (event) => {
         if (event.preventDefault) event.preventDefault()
-        console.log("Sending to api:", JSON.stringify(new Lib.Hash({
-            clientName: event.target.elements.name.value,
-            timeSlot: event.target.elements.slot.value,
-            totalPrice: parseFloat(event.target.querySelector("#totalPrice").innerHTML.slice(0, -1)),
-            order: pizzas
-        })))
+
+
+        // console.log(new Lib.Hash({
+        //     clientName: event.target.elements.name.value,
+        //     timeSlot: event.target.elements.slot.value,
+        //     totalPrice: parseFloat(event.target.querySelector("#totalPrice").innerHTML.slice(0, -1)),
+        //     order: pizzas
+        // }));
         //document.location.href = "/views/orderConfirmation.html"
         return false
     })

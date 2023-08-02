@@ -6,18 +6,18 @@
 */
 
 import Lib from "/scripts/lib.js"
-import {_foodTypes, _menuItems} from "/scripts/apiSpoofer.js"
+import Api from "/scripts/apiSpoofer.js"
 
-window.addEventListener("load", () => {
+window.addEventListener("load", async () => {
 	let q = document.querySelector.bind(document);
-	let foodTypes = _foodTypes.filter(_foodType => _foodType != "PIZZA");
+	let foodTypes = (await Api["menuItem/allCategory"]).filter(_foodType => _foodType != "PIZZA");
 
 	q("#menu").appendChild(Lib.createTag("div", {
 		class: "grid"}));
 	q("#menu div").appendChild(Lib.createTag("h1", {
 		class: "underline"}, "La Carte"));
-	foodTypes.forEach(foodType => {
-		let menuItems = _menuItems.filter(_menuItem => _menuItem.itemCategory == foodType);
+	await foodTypes.forEach(async foodType => {
+		let menuItems = await Api["menuItem/"+foodType]
 
 		q("#menu div").appendChild(Lib.createTag("div", {
 			class: "container"},

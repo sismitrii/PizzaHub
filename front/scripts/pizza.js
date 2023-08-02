@@ -6,10 +6,13 @@
 */
 
 import Lib from "/scripts/lib.js"
-import { _seasonPizza, _menuItems } from "/scripts/apiSpoofer.js"
+// import { _seasonPizza, _menuItems } from "/scripts/apiSpoofer.js"
+import Api from "/scripts/apiSpoofer.js"
 
-window.addEventListener("load", () => {
+window.addEventListener("load", async () => {
     let q = document.querySelector.bind(document);;
+
+    let [seasonPizza, ...pizzas] = await Api["menuItem/PIZZA"]
 
     Lib.Cookie.cart = undefined; // ToDo: DEV
 
@@ -36,7 +39,7 @@ window.addEventListener("load", () => {
                 Lib.createTag("img", {
                     id: "pizzaImage",
                     alt: `Photo de notre ${pizza.name}`,
-                    src: pizza.imageUrl}),
+                    src: pizza.imageUrl || "/assets/pizza.png"}),
                 Lib.createTag("div", {
                     class: "grid-1"}, [
                     Lib.createTag("h2", {
@@ -94,10 +97,6 @@ window.addEventListener("load", () => {
         return pizzaForm;
     }
 
-    let pizzas = _menuItems.filter(menuItem => menuItem.itemCategory === "PIZZA");
-    let seasonPizza = pizzas.find(pizza => pizza.name === _seasonPizza);
-
-    pizzas = pizzas.filter(pizza => pizza !== seasonPizza);
     q("#season-pizza").appendChild(Lib.createTag("div", {
         class: "grid-1"}, [
         Lib.createTag("h2", {

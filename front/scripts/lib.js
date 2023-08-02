@@ -38,7 +38,7 @@ class Hash {
         })
         objects.forEach(obj => {
             Object.entries(obj).forEach(([_k, _v]) => {
-                if (_v.constructor.name === "Object") _v = new Hash(_v)
+                if (_v && _v.constructor.name === "Object") _v = new Hash(_v)
                 if (this[_k]) this[_k] = _v
                 else Object.defineProperty(this, _k, {value: _v, writable: true, enumerable: true})
             })

@@ -30,6 +30,10 @@ sendOrder.addEventListener('click', event => {
 /* ------------------------- Init ----------------------------*/
 /*============================================================*/
 async function init(){
+    if (sessionStorage.getItem('token') == null /*&& faire requete checkToken*/){
+        window.location.href="/views/authentification.html";
+    }
+
     initAddOptionToSelect();
     initButtons(await getMenuItemCategory(), true);
 }

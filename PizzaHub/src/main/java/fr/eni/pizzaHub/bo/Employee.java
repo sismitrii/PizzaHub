@@ -9,10 +9,8 @@ public class Employee {
 	private String password;
 	private Role role;
 	
-	public Employee(int employeeId, String firstName, String lastName, String email, String puid, String password,
+	public Employee(String firstName, String lastName, String email, String puid, String password,
 			Role role) {
-		super();
-		this.employeeId = employeeId;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;

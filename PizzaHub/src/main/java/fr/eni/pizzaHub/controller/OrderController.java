@@ -1,5 +1,6 @@
 package fr.eni.pizzaHub.controller;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,7 @@ import fr.eni.pizzaHub.dto.OrderRequest;
 import fr.eni.pizzaHub.dto.OrderResponse;
 
 @RestController
+@CrossOrigin()
 public class OrderController {
 	
 	private OrderService orderService;

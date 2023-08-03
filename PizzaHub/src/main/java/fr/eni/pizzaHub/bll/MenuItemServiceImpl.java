@@ -17,11 +17,11 @@ public class MenuItemServiceImpl implements MenuItemService {
 		this.menuItemRepository = menuItemRepository;
 	}
 
-	@Override
-	public List<MenuItem> getAll() {
-		
-		return menuItemRepository.getAll();
-	}
+//	@Override
+//	public List<MenuItem> getAll() {
+//		
+//		return menuItemRepository.getAll();
+//	}
 
 	@Override
 	public List<String> getAllItemCategory() {

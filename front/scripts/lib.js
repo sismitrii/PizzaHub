@@ -105,11 +105,16 @@ function idify(string) {
     return "_"+string.replace(" ", "_").toLowerCase();
 }
 
+function pretty(string) {
+    return string.split(/[_-]/).map(word => word[0].toUpperCase() + word.slice(1)).join(" ");
+}
+
 export default {
     idify,
     Cookie,
     Hash,
     trueFlatten,
     createTag,
-    map
+    map,
+    pretty
 }

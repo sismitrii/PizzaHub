@@ -6,8 +6,11 @@
 */
 
 import Lib from "/scripts/lib.js"
-// import { _seasonPizza, _menuItems } from "/scripts/apiSpoofer.js"
 import Api from "/scripts/apiSpoofer.js"
+import Nav from "/scripts/nav.js"
+
+Nav.acceuil;
+Nav.pannier;
 
 window.addEventListener("load", async () => {
     let q = document.querySelector.bind(document);;

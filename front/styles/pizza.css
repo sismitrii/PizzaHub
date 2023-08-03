@@ -5,11 +5,6 @@
 ** pizza.css
 */
 
-.pizza-template {
-    border: 1px solid dimgrey;
-    background-color: lightgrey;
-}
-
 #all-pizza, #season-pizza {
     margin: 2vh 0;
 }
@@ -17,4 +12,40 @@
 button#price {
     color:black;
     font-weight: bold;
+}
+
+form.pizza-template, h2, h1 {
+    background-color: darkgray;
+    border: 2px solid gray;
+    border-radius: 20px;
+}
+
+form.pizza-template img {
+    border-radius: 20px;
+    border: 2px solid gray;
+}
+
+form.pizza-template h2 {
+    color: black;
+    padding: 0 1vw;
+    border-radius: 20px;
+    border: 2px solid gray;
+    background-color: lightgray;
+}
+
+div.input {
+    color: black;
+    padding: 0 1vw;
+    border-radius: 20px;
+    border: 2px solid gray;
+    background-color: lightgray;
+}
+
+h2, h1 {
+    padding: 0 2vw;
+    margin: 1vh 0;
+}
+
+input, select {
+    background-color: transparent;
 }

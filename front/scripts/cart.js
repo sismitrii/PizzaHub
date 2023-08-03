@@ -7,6 +7,10 @@
 
 import Lib from "/scripts/lib.js"
 import Api from "/scripts/apiSpoofer.js"
+import Nav from "/scripts/nav.js"
+
+Nav.acceuil;
+Nav.$pizzas;
 
 window.addEventListener("load", () => {
     let pizzas = new Lib.Hash(JSON.parse(Lib.Cookie.cart || "{}"))

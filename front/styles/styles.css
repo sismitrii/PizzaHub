@@ -11,7 +11,7 @@
 	padding: 0;
 	user-select: none;
 	border: none;
-	color: black;
+	color: #550000;
 	background-color: none;
 	text-decoration: none;
 	text-transform: none;
@@ -29,7 +29,8 @@ p, h1, h2, span { user-select:text; }
 
 .button {
 	border: 2px solid #770000;
-	color: white;
+	color: #770000;
+	font-weight: bold;
 	background-color: red;
 	border-radius: 100vh;
 	padding: 1vh 1vw;
@@ -38,17 +39,18 @@ p, h1, h2, span { user-select:text; }
 
 .button:hover {
 	border: 2px solid #aa0000;
+	color: #aa0000;
 	background-color: #ff7777;
 }
 
 .button:active {
+	color: #ff0000;
 	border: 2px solid #ff0000;
 	background-color: #ffaaaa;
 }
 
 .banner {
 	height: 100vh;
-	margin-bottom: 1vh;
 	background-image: url("/assets/crinckled_background.png");
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -96,24 +98,47 @@ p, h1, h2, span { user-select:text; }
 	height: 100%;
 }
 
-main { margin-bottom: 11vh; }
+body {
+	background: linear-gradient(#ffffff33, #ffffff33), url("/assets/crinckled_background.png");
+	background-repeat: no-repeat;
+	background-size: cover;
+	min-height: 100vh;
+}
+
+main {
+	margin: 11vh 0 11vh 0;
+}
 
 header {
 	position: fixed;
-	top: 5vh;
-	left: 5vh;
-	width: 8vh;
-	height: 8vh;
+	top: 0vh;
+	left: 0vh;
+	right: 0vh;
+	height: 10vh;
 
+	color:wheat;
+	background-color: burlywood;
+	border-bottom: 2px solid black;
+	background-image: url("/assets/crinckled_background.png");
+}
+
+header>div>div {
+	height: 10vh;
+}
+
+header *, footer * {
 	color: white;
 }
 
-header a.button#homeButton {
-	width: 8vh;
-	height: 8vh;
-	padding: 1vh 1vh;
-	text-align: center;
-	justify-self: center;
+nav {
+	position: fixed;
+	top: 2.5vh;
+	left: 0vw;
+	right: 0vw;
+}
+
+nav a {
+	min-width: 20vw;
 }
 
 footer {
@@ -123,8 +148,10 @@ footer {
 	right: 0;
 	bottom: 0;
 
-	color: white;
-	background-color: dimgrey;
+	color:wheat;
+	border-top: 2px solid black;
+	background-image: url("/assets/crinckled_background.png");
+	/* background: url("/assets/crinckled_background.png");*/
 }
 
 img {
@@ -145,6 +172,7 @@ img {
 .border { border: 1px solid black; }
 
 .inline { display: inline; }
+.grid { display: grid; }
 
 .input>label { margin-right: 0.5vw; }
 .input>input { margin-left: 0.5vw; }

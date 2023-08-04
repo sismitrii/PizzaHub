@@ -10,7 +10,7 @@ import Lib from "/scripts/lib.js"
 const routes = {
     menu: ["menu", "home", "homePage", "index", "acceuil"],
     pizza: ["pizzas"],
-    cart: ["cart", "pannier", "basket", "commande", "order"]
+    cart: ["cart", "panier", "basket", "commande", "order"]
 }
 
 const q = document.querySelector.bind(document);

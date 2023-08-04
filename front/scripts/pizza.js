@@ -10,7 +10,7 @@ import Api from "/scripts/apiSpoofer.js"
 import Nav from "/scripts/nav.js"
 
 Nav.acceuil;
-Nav.pannier;
+Nav.panier;
 
 window.addEventListener("load", async () => {
     let q = document.querySelector.bind(document);;

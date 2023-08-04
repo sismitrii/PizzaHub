@@ -22,6 +22,7 @@ import fr.eni.pizzaHub.DALEXception;
 import fr.eni.pizzaHub.bo.OnSiteOrder;
 import fr.eni.pizzaHub.bo.OnlineOrder;
 import fr.eni.pizzaHub.dto.OnlineOrderRequest;
+import fr.eni.pizzaHub.dto.PizzaRequest;
 import fr.eni.pizzaHub.bo.Order;
 
 @Repository
@@ -197,6 +198,13 @@ public class OrderRepositoryImpl implements OrderRepository {
 			"values",
 			"    (:order_id, :customer_name, :time_slot_id)"
 		});
+		String addPizzasQuery = String.join("\n", new String[] {
+			"insert into [MenuItem_Order]",
+			"    ([menu_item_id], [order_id])",
+			"values",
+			"    (:menu_item_id, :order_id)"
+		});
+
 		int timeSlotId;
 
 		try {
@@ -214,6 +222,7 @@ public class OrderRepositoryImpl implements OrderRepository {
 		SqlParameterSource paramTimeSlot = new MapSqlParameterSource()
 			.addValue("time_slot", Time.valueOf(order.getTimeSlot().toLocalTime()));
 		
+
 		timeSlotId = namedJdbcTemplate.query(getTimeSlotFromSlotQuery, paramTimeSlot, result -> {
 			result.next();
 			return result.getInt("ID");
@@ -224,6 +233,21 @@ public class OrderRepositoryImpl implements OrderRepository {
 			.addValue("customer_name", order.getCustomerName())
 			.addValue("time_slot_id", timeSlotId);
 		namedJdbcTemplate.update(createOnlineOrderQuery, parameters);
+
+		for (PizzaRequest pizza : order.getPizzas()) {
+			String getMenuItemQuery = "select menu_item_id as ID from MenuItem where name=:name and size=:size";
+			SqlParameterSource paramMenuItem = new MapSqlParameterSource()
+				.addValue("name", pizza.getName())
+				.addValue("size", pizza.getSize());
+			int menuItemId = namedJdbcTemplate.query(getMenuItemQuery, paramMenuItem, result -> {
+				result.next();
+				return result.getInt("ID");
+			});
+			SqlParameterSource parametersFeur = new MapSqlParameterSource()
+				.addValue("order_id", orderId)
+				.addValue("menu_item_id", menuItemId);
+			namedJdbcTemplate.update(addPizzasQuery, parametersFeur);
+		}
 	}
 
 //	private static class OnSiteOrderRowMapper implements RowMapper<OnSiteOrder> {

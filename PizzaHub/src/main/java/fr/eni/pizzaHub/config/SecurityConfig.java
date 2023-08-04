@@ -19,6 +19,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
@@ -27,6 +29,9 @@ import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
@@ -62,13 +67,14 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
 		return http
 					.csrf(csrf -> csrf.disable())
+					.cors(cors -> cors.disable())
 					.authorizeHttpRequests(auth -> auth
 							.requestMatchers("/menuItem/**", "/auth/token", "/**").permitAll()
 							.anyRequest().authenticated()
 					)
 					.oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()))
 					.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-//					.httpBasic(Customizer.withDefaults())
+					//.httpBasic(Customizer.withDefaults())
 					.build();
 	}
 	
@@ -82,7 +88,6 @@ public class SecurityConfig {
 				.build()
 				);
 	}
-	
 	
 	@Bean
 	public JwtEncoder jwtEncoder() {

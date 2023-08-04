@@ -1,5 +1,7 @@
 package fr.eni.pizzaHub.controller;
 
+import java.util.List;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -16,6 +18,8 @@ public class CorsConfig {
         config.addAllowedOrigin("http://127.0.0.1:5500/"); // Allow requests from any origin
         config.addAllowedMethod("*");
         config.addAllowedMethod("OPTIONS");
+        config.setExposedHeaders(List.of("Authorization"));
+
 
 
         // Allow all HTTP methods (GET, POST, etc.)

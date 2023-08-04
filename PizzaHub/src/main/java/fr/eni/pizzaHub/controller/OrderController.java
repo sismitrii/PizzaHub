@@ -14,7 +14,7 @@ import fr.eni.pizzaHub.dto.OrderRequest;
 import fr.eni.pizzaHub.dto.OrderResponse;
 
 @RestController
-@CrossOrigin()
+@CrossOrigin
 public class OrderController {
 	
 	private OrderService orderService;
@@ -29,6 +29,7 @@ public class OrderController {
 		return orderService.findOrder(orderRequest.getOrderId(), orderRequest.isOnlineOrder());
 	}
 	
+	@CrossOrigin
 	@GetMapping("/order/toPrepare")
 	public OrderResponse getOrderById(){
 		return orderService.findOrderToPrepare();

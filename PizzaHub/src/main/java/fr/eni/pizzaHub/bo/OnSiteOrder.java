@@ -1,10 +1,10 @@
 package fr.eni.pizzaHub.bo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OnSiteOrder extends Order{
 	
-	private List<MenuItem> menuItems;
 	private int tableNumber;
 	private int seats;
 	private  int actualStep;
@@ -14,25 +14,16 @@ public class OnSiteOrder extends Order{
 		super(orderId);
 		this.tableNumber = tableNumber;
 		this.seats = seats;
-		if (menuItems != null ) {
-			this.actualStep = getActualStep(menuItems);
+		if (this.getMenuItems() != null ) {
+			this.actualStep = getActualStep(this.getMenuItems());
 		}
 	}
-	
+
 	public OnSiteOrder(int orderId, int tableNumber, int seats, int actualStep) {
 		this(orderId, tableNumber, seats);
 		this.actualStep = actualStep;
 	}
-
 	
-	
-	public List<MenuItem> getMenuItems() {
-		return menuItems;
-	}
-
-	public void setMenuItems(List<MenuItem> menuItems) {
-		this.menuItems = menuItems;
-	}
 	public int getTableNumber() {
 		return tableNumber;
 	}

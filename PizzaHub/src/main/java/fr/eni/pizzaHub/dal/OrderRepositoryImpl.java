@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.sql.Time;
 import java.util.List;
 
-import org.springframework.aot.generate.InMemoryGeneratedFiles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -23,6 +22,7 @@ import fr.eni.pizzaHub.DALEXception;
 import fr.eni.pizzaHub.bo.OnSiteOrder;
 import fr.eni.pizzaHub.bo.OnlineOrder;
 import fr.eni.pizzaHub.dto.OnlineOrderRequest;
+import fr.eni.pizzaHub.bo.Order;
 
 @Repository
 public class OrderRepositoryImpl implements OrderRepository {
@@ -44,6 +44,19 @@ public class OrderRepositoryImpl implements OrderRepository {
 
 		return namedJdbcTemplate.queryForObject(sql, parameters, (rs, rowNum) -> new OnSiteOrder(rs.getInt("order_id"),
 				rs.getInt("table_number"), rs.getInt("seats"), rs.getInt("order_step")));
+
+	}
+	
+	@Override
+	public OnlineOrder findOnlineOrderById(int orderId) {
+		String sql = "SELECT oo.order_id AS orderId, customer_name, ts.slot AS slot "
+				+ "FROM [OnlineOrder] oo "
+				+ "INNER JOIN [TimeSlot] ts ON oo.time_slot_id = ts.time_slot_id "
+				+ "WHERE oo.order_id = :orderId";
+		
+		SqlParameterSource parameters = new MapSqlParameterSource("orderId", orderId);
+		return namedJdbcTemplate.queryForObject(sql, parameters, (rs, rowNum) -> 
+			new OnlineOrder(rs.getInt("orderId"), rs.getString("customer_name"),rs.getTime("slot").toLocalTime()));
 
 	}
 
@@ -147,14 +160,15 @@ public class OrderRepositoryImpl implements OrderRepository {
 				}
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new DALEXception("An error happen during getting connection in deleteOrder", e);
+
 		}
 	}
 
 	@Override
 	public void setOrderToBePrepared(int orderId) {
-		String UPDATE_IS_TO_BE_PREPARED = "UPDATE [Order] SET is_to_Prepare = 1 WHERE order_id = :orderId";
+		String UPDATE_IS_TO_BE_PREPARED = "UPDATE [Order] SET is_to_Prepare = ~(is_to_Prepare) WHERE order_id = :orderId";
 
 		SqlParameterSource parameters = new MapSqlParameterSource("orderId", orderId);
 
@@ -219,5 +233,43 @@ public class OrderRepositoryImpl implements OrderRepository {
 //	        return onSiteOrder;
 //	    }
 //	}
+	public List<Order> getAllOrderToPrepare() {
+		// request all order where is_to_Prepare = 1 Inner Join
+		String SELECT_RESTAURANT_ORDER = "SELECT ro.order_id AS orderId, table_number, seats, order_step "
+				+ "FROM RestaurantOrder ro "
+				+ "INNER JOIN [Order] o ON ro.order_id = o.order_id "
+				+ "WHERE  is_to_Prepare = '1'";
+		
+		String SELECT_ONLINE_ORDER = "SELECT oo.order_id, customer_name, ts.slot "
+				+ "FROM [OnlineOrder] oo "
+				+ "INNER JOIN [TimeSlot] ts ON oo.time_slot_id = ts.time_slot_id "
+				+ "INNER JOIN [Order] o ON o.order_id = oo.order_id "
+				+ "WHERE is_to_Prepare = '1'";
+		
+		List<Order> orders = namedJdbcTemplate.query(SELECT_RESTAURANT_ORDER, new OnSiteOrderRowMapper());
+		orders.addAll(namedJdbcTemplate.query(SELECT_ONLINE_ORDER, new OnlineOrderRowMapper()));
+		
+		// can be improve using only one transaction
+		return orders;
+	}
+	
+
+
+	private static class OnSiteOrderRowMapper implements RowMapper<Order> {
+	    @Override
+	    public OnSiteOrder mapRow(ResultSet rs, int rowNum) throws SQLException {
+	    	OnSiteOrder onSiteOrder = new OnSiteOrder(rs.getInt("orderId"), rs.getInt("table_number"), rs.getInt("seats"), rs.getInt("order_step"));
+	        return onSiteOrder;
+	    }
+	}
+	
+	private static class OnlineOrderRowMapper implements RowMapper<Order> {
+	    @Override
+	    public OnlineOrder mapRow(ResultSet rs, int rowNum) throws SQLException {
+	    	OnlineOrder onlineOrder = new OnlineOrder(rs.getInt("order_id"), rs.getString("customer_name"),rs.getTime("slot").toLocalTime());
+	    	return onlineOrder;
+	    }
+	}
+
 
 }

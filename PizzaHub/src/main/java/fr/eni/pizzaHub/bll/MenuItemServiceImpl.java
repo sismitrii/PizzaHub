@@ -35,6 +35,7 @@ public class MenuItemServiceImpl implements MenuItemService {
 	@Override
 	public List<MenuItem> findAllItemForCategory(MenuItemCategory menuItemCategory) {
 		return menuItemRepository.findAllItemForCategory(menuItemCategory);
+		 
 	}
 	
 	

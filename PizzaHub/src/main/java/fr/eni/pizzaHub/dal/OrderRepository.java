@@ -4,6 +4,7 @@ import java.util.List;
 
 import fr.eni.pizzaHub.DALEXception;
 import fr.eni.pizzaHub.bo.OnSiteOrder;
+import fr.eni.pizzaHub.dto.OnlineOrderRequest;
 import fr.eni.pizzaHub.bo.OnlineOrder;
 import fr.eni.pizzaHub.bo.Order;
 
@@ -16,6 +17,7 @@ public interface OrderRepository {
 	public void addMenuItemToOrder(int orderId, int menuItemToAddId);
 	public void deleteOrder(int orderId) throws DALEXception;
 	public void setOrderToBePrepared(int orderId);
+	public void createOnlineOrder(OnlineOrderRequest order);
 	public List<Order> getAllOrderToPrepare();
 	
 }

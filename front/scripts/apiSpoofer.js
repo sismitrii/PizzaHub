@@ -70,3 +70,25 @@ export const _menuItems = [
 ];
 
 export const _seasonPizza = "Hawaienne";
+
+export default new Proxy({}, {
+	async get(target, key, receiver) {
+		// get request
+		let response = await fetch("http://localhost:8080/"+key);
+		if (response.ok)
+			return await response.json();
+		else
+			return undefined;
+	},
+	async set(target, key, value, receiver) {
+		// post request
+		let response = await fetch('http://localhost:8080/'+key, {
+			method:"POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(value)
+		})
+	}
+})

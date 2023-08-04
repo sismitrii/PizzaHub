@@ -5,12 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDateTime;
+import java.sql.Time;
 import java.util.List;
 
-import org.springframework.aot.generate.InMemoryGeneratedFiles;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -23,6 +21,7 @@ import org.springframework.stereotype.Repository;
 import fr.eni.pizzaHub.DALEXception;
 import fr.eni.pizzaHub.bo.OnSiteOrder;
 import fr.eni.pizzaHub.bo.OnlineOrder;
+import fr.eni.pizzaHub.dto.OnlineOrderRequest;
 import fr.eni.pizzaHub.bo.Order;
 
 @Repository
@@ -177,6 +176,63 @@ public class OrderRepositoryImpl implements OrderRepository {
 	}
 
 	@Override
+	public void createOnlineOrder(OnlineOrderRequest order) {
+		String createOrderQuery = String.join("\n", new String[] {
+			"insert into [Order]",
+			"    ([is_to_Prepare])",
+			"values",
+			"    (1)"
+		});
+		String getTimeSlotFromSlotQuery = String.join("\n", new String[] {
+			"select",
+			"    [time_slot_id] as ID",
+			"from",
+			"    [TimeSlot]",
+			"where",
+			"    [slot] = cast(:time_slot as time)"
+		}); 
+		String createOnlineOrderQuery = String.join("\n", new String[] {
+			"insert into [OnlineOrder]",
+			"    ([order_id], [customer_name], [time_slot_id])",
+			"values",
+			"    (:order_id, :customer_name, :time_slot_id)"
+		});
+		int timeSlotId;
+
+		try {
+			
+		} catch (Exception error) {
+			System.out.println(error);
+			timeSlotId = 1;
+		}
+
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+
+		jdbcTemplate.update(connection -> connection.prepareStatement(createOrderQuery, Statement.RETURN_GENERATED_KEYS), keyHolder);
+		int orderId = keyHolder.getKey().intValue();
+		
+		SqlParameterSource paramTimeSlot = new MapSqlParameterSource()
+			.addValue("time_slot", Time.valueOf(order.getTimeSlot().toLocalTime()));
+		
+		timeSlotId = namedJdbcTemplate.query(getTimeSlotFromSlotQuery, paramTimeSlot, result -> {
+			result.next();
+			return result.getInt("ID");
+		});
+	
+		SqlParameterSource parameters = new MapSqlParameterSource()
+			.addValue("order_id", orderId)
+			.addValue("customer_name", order.getCustomerName())
+			.addValue("time_slot_id", timeSlotId);
+		namedJdbcTemplate.update(createOnlineOrderQuery, parameters);
+	}
+
+//	private static class OnSiteOrderRowMapper implements RowMapper<OnSiteOrder> {
+//	    @Override
+//	    public OnSiteOrder mapRow(ResultSet rs, int rowNum) throws SQLException {
+//	    	OnSiteOrder onSiteOrder = new OnSiteOrder(rs.getInt("[order_id]"), rs.getInt("[table_number]"), rs.getInt("[seats]"), rs.getInt("[order_step]"));
+//	        return onSiteOrder;
+//	    }
+//	}
 	public List<Order> getAllOrderToPrepare() {
 		// request all order where is_to_Prepare = 1 Inner Join
 		String SELECT_RESTAURANT_ORDER = "SELECT ro.order_id AS orderId, table_number, seats, order_step "

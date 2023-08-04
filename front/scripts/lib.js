@@ -108,7 +108,7 @@ function idify(string) {
 }
 
 function pretty(string) {
-    return string.split(/[_-]/).map(word => word[0].toUpperCase() + word.slice(1)).join(" ");
+    return string.toLowerCase().split(/[_-]/).map(word => word[0].toUpperCase() + word.slice(1)).join(" ");
 }
 
 export default {

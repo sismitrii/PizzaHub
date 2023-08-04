@@ -41,11 +41,10 @@ public class MenuItemRepositoryImpl implements MenuItemRepository{
 	
 	@Override
 	public List<MenuItem> findAllItemForCategory(MenuItemCategory menuItemCategory) {
-		String sql = "SELECT mi.menu_item_id, mi.name AS Name, mic.name AS MenuItemCategory, price, p.size AS Size"
+		String sql = "SELECT mi.menu_item_id, mi.name AS Name, mic.name AS MenuItemCategory, price, mi.size AS Size"
 				+ " FROM MenuItem mi"
 				+ " INNER JOIN [MenuItemCategory] mic ON mi.[category_id] = mic.[id]"
-				+ " LEFT JOIN Pizza p ON mi.menu_item_id = p.menu_item_id "
-				+ " WHERE mic.name = :menuItemCategory AND (mic.name != 'PIZZA' OR p.size = 'L')";
+				+ " WHERE mic.name = :menuItemCategory AND (mic.name != 'PIZZA' OR mi.size = 'L')";
 		
 		SqlParameterSource parameters = new MapSqlParameterSource("menuItemCategory", menuItemCategory.toString());
         return namedJdbcTemplate.query(sql, parameters, new MenuItemRowMapper());

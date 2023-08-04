@@ -16,6 +16,7 @@ window.addEventListener("load", async () => {
     let q = document.querySelector.bind(document);;
 
     let [seasonPizza, ...pizzas] = await Api["menuItem/PIZZA"]
+    console.log(pizzas)
 
     Lib.Cookie.cart = undefined; // ToDo: DEV
 
@@ -30,8 +31,8 @@ window.addEventListener("load", async () => {
     }
 
     const PRICE_MODS = {
-        "M": 0,
-        "L": 3
+        "M": -3,
+        "L": 0,
     }
 
     function pizzaTemplate(pizza) {
@@ -60,7 +61,8 @@ window.addEventListener("load", async () => {
                                 value: "M"},
                                 "M"),
                             Lib.createTag("option", {
-                                value: "L"},
+                                value: "L",
+                                selected: "true"},
                                 "L"),
                             ]),
                     ]),

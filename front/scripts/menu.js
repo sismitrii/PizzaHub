@@ -29,10 +29,10 @@ window.addEventListener("load", async () => {
 				Lib.createTag("div", {}, [
 					Lib.createTag("div", {
 						class: "align-left"},
-						`- ${menuItem.name}`),
+						`- ${Lib.pretty(menuItem.name)}`),
 					Lib.createTag("div", {
 						class: "align-right bold"},
-						`${menuItem.price}€`)])
+						`${menuItem.price.toLocaleString(undefined, {minimumFractionDigits: 2})}€`)])
 			)
 		});
 	});

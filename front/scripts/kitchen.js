@@ -4,6 +4,9 @@ const atRestaurantSection = document.querySelector("section.atRestaurant .scroll
 init();
 
 async function init(){
+    if (sessionStorage.getItem('token') == null){
+        window.location.href="/views/authentification.html";
+    }
     //Faire le get
     let orders = await getOrders();
     console.log(orders)
@@ -16,9 +19,19 @@ async function init(){
 }
 
 async function getOrders(){
-    
+    let bearer = 'Bearer ' +sessionStorage.getItem('token');
+    console.log(bearer);
     try {
-        let res = await fetch(`http://localhost:8080/order/toPrepare`);
+        let res = await fetch(`http://127.0.0.1:8080/order/toPrepare`, {
+            headers: 
+            {
+                'Authorization' : bearer,
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Method' : '*',
+                'Access-Control-Allow-Headers' : "*",
+                'Origin': 'http://localhost:5500/' 
+            }
+        });
         if (res.ok){
             return await res.json();
         }
@@ -85,4 +98,20 @@ function groupMenuItemsByMenuItemId(data) {
     });
 
     return Object.values(groupedMenuItems);
+}
+
+
+function getCookie(name) {
+    if (!document.cookie) {
+      return null;
+    }
+  
+    const xsrfCookies = document.cookie.split(';')
+      .map(c => c.trim())
+      .filter(c => c.startsWith(name + '='));
+  
+    if (xsrfCookies.length === 0) {
+      return null;
+    }
+    return decodeURIComponent(xsrfCookies[0].split('=')[1]);
 }

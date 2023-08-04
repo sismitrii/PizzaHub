@@ -17,6 +17,10 @@ function findPageAndOrderId(){
 }
 
 function init(){
+    if (sessionStorage.getItem('token') == null){
+        window.location.href="/views/authentification.html";
+    }
+    
     let pageData = findPageAndOrderId();
     if (pageData.online){
         initOnlineOrder(pageData.orderId);

@@ -79,6 +79,7 @@ header h1 {
     font-size: 18px;
     font-weight: thin;
     cursor: pointer;
+    overflow: hidden;
     /* font-family: TODO; */
 }
 

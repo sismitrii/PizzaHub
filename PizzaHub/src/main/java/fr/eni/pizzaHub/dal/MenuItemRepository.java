@@ -6,7 +6,7 @@ import fr.eni.pizzaHub.bo.MenuItem;
 import fr.eni.pizzaHub.bo.MenuItemCategory;
 
 public interface MenuItemRepository {
-	public List<MenuItem> getAll();
+//	public List<MenuItem> getAll();
 	
 	public List<MenuItem> findAllItemForCategory(MenuItemCategory menuItemCategory);
 	

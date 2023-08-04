@@ -29,15 +29,14 @@ public class MenuItemRepositoryImpl implements MenuItemRepository{
         this.namedJdbcTemplate = namedJdbcTemplate;
     }
     
-	@Override
-	public List<MenuItem> getAll() {
-		String sql = "SELECT mi.menu_item_id, mi.name AS Name, mic.name AS MenuItemCategory, [price], p.size AS Size"
-				+ " FROM MenuItem mi INNER JOIN [MenuItemCategory] mic ON mi.[category_id] = mic.[id]"
-				+ " LEFT JOIN Pizza p ON mi.menu_item_id = p.menu_item_id ";
-   	 	
-        return jdbcTemplate.query(sql, new MenuItemRowMapper());
-	
-	}
+//	@Override
+//	public List<MenuItem> getAll() {
+//		String sql = "SELECT mi.menu_item_id, mi.name AS Name, mic.name AS MenuItemCategory, [price], p.size AS Size"
+//				+ " FROM MenuItem mi INNER JOIN [MenuItemCategory] mic ON mi.[category_id] = mic.[id]"
+//				+ " LEFT JOIN Pizza p ON mi.menu_item_id = p.menu_item_id ";
+//   	 	
+//        return jdbcTemplate.query(sql, new MenuItemRowMapper());
+//	}
 	
 	@Override
 	public List<MenuItem> findAllItemForCategory(MenuItemCategory menuItemCategory) {

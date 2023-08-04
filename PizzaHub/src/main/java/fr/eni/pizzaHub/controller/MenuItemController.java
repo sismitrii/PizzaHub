@@ -28,11 +28,11 @@ public class MenuItemController {
 	public List<String> getAllItemCategory(){
 		 return menuItemService.getAllItemCategory();
 	}
-
-	@GetMapping("/test")
-	public List<MenuItem> getAll(){
-		 return menuItemService.getAll();
-	}
+	
+//	@GetMapping("/test")
+//	public List<MenuItem> getAll(){
+//		 return menuItemService.getAll();
+//	}
 	
 	@GetMapping("/{menuItemCategory}")
 	@ResponseBody

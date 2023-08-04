@@ -18,8 +18,6 @@ window.addEventListener("load", async () => {
     let [seasonPizza, ...pizzas] = await Api["menuItem/PIZZA"]
     console.log(pizzas)
 
-    Lib.Cookie.cart = undefined; // ToDo: DEV
-
     function addToCart(pizza) {
         console.log("pizza", pizza)
         let cart = JSON.parse(Lib.Cookie.cart || "{}")

@@ -25,8 +25,9 @@ function forceArray(...data) {
 class Hash {
     constructor (...data) {
         let key = null
-        let [objects, datas] = data.flat(2147483647).reduce((o, x) => {(x.constructor.name === "Object") ? o[0] = [...o[0], x] : o[1] = [...o[1], x]; return o}, [[],[]])
+        let [objects, datas] = data.flat(2147483647).reduce((o, x) => {(x.constructor.name === "Object" || x.constructor.name === "Hash") ? o[0] = [...o[0], x] : o[1] = [...o[1], x]; return o}, [[],[]])
 
+        console.log(objects, datas)
         trueFlatten(datas).forEach((x, i) => {
             if (i % 2 == 0) {
                 key = x
@@ -38,6 +39,7 @@ class Hash {
         })
         objects.forEach(obj => {
             Object.entries(obj).forEach(([_k, _v]) => {
+                console.log("dbg", obj, _k, _v);
                 if (_v && _v.constructor.name === "Object") _v = new Hash(_v)
                 if (this[_k]) this[_k] = _v
                 else Object.defineProperty(this, _k, {value: _v, writable: true, enumerable: true})

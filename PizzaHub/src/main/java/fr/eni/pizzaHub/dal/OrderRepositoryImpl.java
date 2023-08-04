@@ -167,7 +167,7 @@ public class OrderRepositoryImpl implements OrderRepository {
 			"insert into [Order]",
 			"    ([is_to_Prepare])",
 			"values",
-			"    (0)"
+			"    (1)"
 		});
 		String getTimeSlotFromSlotQuery = String.join("\n", new String[] {
 			"select",

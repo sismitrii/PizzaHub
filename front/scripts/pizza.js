@@ -31,8 +31,7 @@ window.addEventListener("load", async () => {
 
     const PRICE_MODS = {
         "M": 0,
-        "L": 3,
-        "XL": 5
+        "L": 3
     }
 
     function pizzaTemplate(pizza) {
@@ -63,9 +62,6 @@ window.addEventListener("load", async () => {
                             Lib.createTag("option", {
                                 value: "L"},
                                 "L"),
-                            Lib.createTag("option", {
-                                value: "XL"},
-                                "XL"),
                             ]),
                     ]),
                     Lib.createTag("div", {
@@ -76,7 +72,7 @@ window.addEventListener("load", async () => {
                             disabled: "true",
                             name: "price",
                             value: pizza.price},
-                            `${pizza.price}€`),
+                            `${pizza.price.toLocaleString(undefined, {minimumFractionDigits: 2})}€`),
                         Lib.createTag("button", {
                             class: "grid button",
                             id: "submit",
@@ -87,12 +83,13 @@ window.addEventListener("load", async () => {
         pizzaForm.querySelector("#size").addEventListener("change", (event) => {
             let priceNode = event.target.form.querySelector("#price");
 
-            priceNode.innerHTML = pizza.price + PRICE_MODS[event.target.value] + "€"
+            priceNode.innerHTML = (pizza.price + PRICE_MODS[event.target.value]).toLocaleString(undefined, {minimumFractionDigits: 2}) + "€"
             priceNode.value = pizza.price + PRICE_MODS[event.target.value];
         });
 
         pizzaForm.querySelector("#submit").addEventListener("click", (event) => {
-            let item = new Lib.Hash(pizza, Lib.map(event.target.form.elements, (element) => element.name?.length > 0 ? [element.name, element.value] : []))
+            console.log("DBG", Lib.map(event.target.form.elements, (element) => element.name?.length > 0 ? [element.name, element.value] : []))
+            let item = new Lib.Hash(pizza, new Lib.Hash(Lib.map(event.target.form.elements, (element) => element.name?.length > 0 ? [element.name, element.value] : [])))
             console.log("adding", item, "to the cart", item.length)
             addToCart(item)
         });

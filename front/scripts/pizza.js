@@ -6,10 +6,17 @@
 */
 
 import Lib from "/scripts/lib.js"
-import { _seasonPizza, _menuItems } from "/scripts/apiSpoofer.js"
+import Api from "/scripts/apiSpoofer.js"
+import Nav from "/scripts/nav.js"
 
-window.addEventListener("load", () => {
+Nav.acceuil;
+Nav.panier;
+
+window.addEventListener("load", async () => {
     let q = document.querySelector.bind(document);;
+
+    let [seasonPizza, ...pizzas] = await Api["menuItem/PIZZA"]
+    console.log(pizzas)
 
     Lib.Cookie.cart = undefined; // ToDo: DEV
 
@@ -24,9 +31,8 @@ window.addEventListener("load", () => {
     }
 
     const PRICE_MODS = {
-        "M": 0,
-        "L": 3,
-        "XL": 5
+        "M": -3,
+        "L": 0,
     }
 
     function pizzaTemplate(pizza) {
@@ -36,7 +42,7 @@ window.addEventListener("load", () => {
                 Lib.createTag("img", {
                     id: "pizzaImage",
                     alt: `Photo de notre ${pizza.name}`,
-                    src: pizza.imageUrl}),
+                    src: pizza.imageUrl || "/assets/pizza.png"}),
                 Lib.createTag("div", {
                     class: "grid-1"}, [
                     Lib.createTag("h2", {
@@ -55,11 +61,9 @@ window.addEventListener("load", () => {
                                 value: "M"},
                                 "M"),
                             Lib.createTag("option", {
-                                value: "L"},
+                                value: "L",
+                                selected: "true"},
                                 "L"),
-                            Lib.createTag("option", {
-                                value: "XL"},
-                                "XL"),
                             ]),
                     ]),
                     Lib.createTag("div", {
@@ -70,7 +74,7 @@ window.addEventListener("load", () => {
                             disabled: "true",
                             name: "price",
                             value: pizza.price},
-                            `${pizza.price}€`),
+                            `${pizza.price.toLocaleString(undefined, {minimumFractionDigits: 2})}€`),
                         Lib.createTag("button", {
                             class: "grid button",
                             id: "submit",
@@ -81,23 +85,20 @@ window.addEventListener("load", () => {
         pizzaForm.querySelector("#size").addEventListener("change", (event) => {
             let priceNode = event.target.form.querySelector("#price");
 
-            priceNode.innerHTML = pizza.price + PRICE_MODS[event.target.value] + "€"
+            priceNode.innerHTML = (pizza.price + PRICE_MODS[event.target.value]).toLocaleString(undefined, {minimumFractionDigits: 2}) + "€"
             priceNode.value = pizza.price + PRICE_MODS[event.target.value];
         });
 
         pizzaForm.querySelector("#submit").addEventListener("click", (event) => {
-            let item = Lib.toHash(pizza, Lib.map(event.target.form.elements, (element) => element.name?.length > 0 ? [element.name, element.value] : []))
-            console.log("adding", item, "to the cart")
+            console.log("DBG", Lib.map(event.target.form.elements, (element) => element.name?.length > 0 ? [element.name, element.value] : []))
+            let item = new Lib.Hash(pizza, new Lib.Hash(Lib.map(event.target.form.elements, (element) => element.name?.length > 0 ? [element.name, element.value] : [])))
+            console.log("adding", item, "to the cart", item.length)
             addToCart(item)
         });
 
         return pizzaForm;
     }
 
-    let pizzas = _menuItems.filter(menuItem => menuItem.itemCategory === "PIZZA");
-    let seasonPizza = pizzas.find(pizza => pizza.name === _seasonPizza);
-
-    pizzas = pizzas.filter(pizza => pizza !== seasonPizza);
     q("#season-pizza").appendChild(Lib.createTag("div", {
         class: "grid-1"}, [
         Lib.createTag("h2", {

@@ -19,10 +19,6 @@ public class CorsConfig {
         config.addAllowedMethod("*");
         config.addAllowedMethod("OPTIONS");
         config.setExposedHeaders(List.of("Authorization"));
-
-
-
-        // Allow all HTTP methods (GET, POST, etc.)
         config.addAllowedHeader("*"); // Allow all headers
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
